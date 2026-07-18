@@ -1,0 +1,37 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f6f9; /* Color de fondo global */
+    overflow-x: hidden; /* Evita scrolls accidentales durante la animación */
+}
+
+.contenido {
+    flex: 1;
+    margin-left: 250px; /* Ancho inicial del sidebar abierto */
+    transition: margin-left 0.3s ease; /* Transición fluida */
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Vital para que el flexbox no se rompa */
+}
+
+/* Estado cuando el sidebar se colapsa */
+.sidebar-cerrado .contenido {
+    margin-left: 70px; /* Ancho del sidebar cerrado */
+}
+
+.pagina {
+    margin-top: 70px; /* Altura del navbar */
+    padding: 25px;
+    flex-grow: 1; /* Asegura que la página ocupe el resto del espacio */
+    background: #f4f6f9;
+}
+
+/* Opcional: Asegura que el navbar se adapte */
+.navbar {
+    width: calc(100% - 250px); /* Por defecto */
+    transition: width 0.3s ease;
+}
+
+.sidebar-cerrado + .contenido .navbar {
+    width: calc(100% - 70px);
+}

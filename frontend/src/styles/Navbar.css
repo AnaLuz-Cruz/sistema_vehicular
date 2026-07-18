@@ -1,0 +1,37 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width); /* Ajustado al ancho del sidebar */
+    right: 0;
+    height: var(--navbar-height);
+    background: #111; /* Navbar blanco es más moderno */
+    color: #ece4e4;       /* Texto oscuro */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    z-index: 900;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra suave */
+}
+
+.btn-menu {
+    background: none;
+    border: none;
+    color: #e1d5d5;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.btn-salir {
+    background: #dc3545;
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-salir:hover {
+    background: #c82333;
+}
+

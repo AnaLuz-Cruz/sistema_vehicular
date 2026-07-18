@@ -1,0 +1,849 @@
+# USUARIOS
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"maria.lopez",
+#     "password":"mz361q2p"
+# }
+
+
+GET http://localhost:5000/usuarios
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo1LCJ1c3VhcmlvIjoibWFyaWEubG9wZXoiLCJyb2wiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzg0MjY0ODY2LCJleHAiOjE3ODQzNTEyNjZ9.Q-TMnxlvDnwZvbs6osnhMR6JDKfyBBbFT57m5UcYpLo
+
+# GET http://localhost:5000/usuarios/5
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo1LCJ1c3VhcmlvIjoibWFyaWEubG9wZXoiLCJyb2wiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzg0MTUwMzgxLCJleHAiOjE3ODQyMzY3ODF9.Cd59jw1INZp3nqfMHR7CYkjdPjrsCDn_T_88swRG9bQ
+
+
+# POST http://localhost:5000/usuarios
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo1LCJ1c3VhcmlvIjoibWFyaWEubG9wZXoiLCJyb2wiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzg0MTUwMzgxLCJleHAiOjE3ODQyMzY3ODF9.Cd59jw1INZp3nqfMHR7CYkjdPjrsCDn_T_88swRG9bQ
+# Content-Type: application/json
+
+# {
+#     "nombre":"Ana Torres",
+#     "usuario":"anatorres",
+#     "password":"123456",
+#     "correo":"ana@gmail.com",
+#     "rol":"Contabilidad",
+#     "id_empresa":1,
+#     "id_sucursal":1,
+#     "id_area":1
+# }
+
+# PUT http://localhost:5000/usuarios/7
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo1LCJ1c3VhcmlvIjoibWFyaWEubG9wZXoiLCJyb2wiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzg0MTUwMzgxLCJleHAiOjE3ODQyMzY3ODF9.Cd59jw1INZp3nqfMHR7CYkjdPjrsCDn_T_88swRG9bQ
+# Content-Type: application/json
+
+# {
+#     "nombre":"Ana Torres Actualizada",
+#     "correo":"ana.actualizada@gmail.com",
+#     "rol":"Administrador",
+#     "id_empresa":1,
+#     "id_sucursal":1,
+#     "id_area":1
+# }
+
+
+# PATCH http://localhost:5000/usuarios/7/estado
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo1LCJ1c3VhcmlvIjoibWFyaWEubG9wZXoiLCJyb2wiOiJBZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzg0MTUwMzgxLCJleHAiOjE3ODQyMzY3ODF9.Cd59jw1INZp3nqfMHR7CYkjdPjrsCDn_T_88swRG9bQ
+# Content-Type: application/json
+
+# {
+#     "estado":1
+# }
+
+
+# EMPRESAS
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"carlos",
+#     "password":"123456"
+# }
+
+
+
+# GET http://localhost:5000/sucursales
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTQxNywiZXhwIjoxNzg0MjM3ODE3fQ.cKLXy1Crom4UwsPCFF20VAFuG8R8kXGcXz29rP1AQGE
+
+# POST http://localhost:5000/sucursales
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTQxNywiZXhwIjoxNzg0MjM3ODE3fQ.cKLXy1Crom4UwsPCFF20VAFuG8R8kXGcXz29rP1AQGE
+# Content-Type: application/json
+
+
+# {
+#     "nombre":"Sucursal Atlacomulco",
+#     "direccion":"Av. Principal #100",
+#     "telefono":"7121234567",
+#     "correo":"atlacomulco@fibratec.com",
+#     "horario":"09:00 - 18:00",
+#     "id_empresa":1
+# }
+
+# GET http://localhost:5000/sucursales/1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTQxNywiZXhwIjoxNzg0MjM3ODE3fQ.cKLXy1Crom4UwsPCFF20VAFuG8R8kXGcXz29rP1AQGE
+
+# PATCH http://localhost:5000/sucursales/1/estado
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTQxNywiZXhwIjoxNzg0MjM3ODE3fQ.cKLXy1Crom4UwsPCFF20VAFuG8R8kXGcXz29rP1AQGE
+# Content-Type: application/json
+
+
+# {
+#     "estado":1
+# }
+
+# AREAS
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"carlos",
+#     "password":"123456"
+# }
+
+
+
+# GET http://localhost:5000/areas
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTk3MSwiZXhwIjoxNzg0MjM4MzcxfQ.P6Db07XX8oAppnHXNR_ko9-ncmSlz4ZbGL_he6ZHf_c
+
+# POST http://localhost:5000/areas
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTk3MSwiZXhwIjoxNzg0MjM4MzcxfQ.P6Db07XX8oAppnHXNR_ko9-ncmSlz4ZbGL_he6ZHf_c
+# Content-Type: application/json
+
+
+# {
+#     "nombre":"Ingeniería de Red"
+# }
+
+# PUT http://localhost:5000/areas/1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTk3MSwiZXhwIjoxNzg0MjM4MzcxfQ.P6Db07XX8oAppnHXNR_ko9-ncmSlz4ZbGL_he6ZHf_c
+# Content-Type: application/json
+
+
+# {
+#     "nombre":"Ingeniería de Planta Externa"
+# }
+
+# DELETE http://localhost:5000/areas/12
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1MTk3MSwiZXhwIjoxNzg0MjM4MzcxfQ.P6Db07XX8oAppnHXNR_ko9-ncmSlz4ZbGL_he6ZHf_c
+
+# UNIDADES
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"carlos",
+#     "password":"123456"
+# }
+
+
+# GET http://localhost:5000/unidades
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDIzMzgxNywiZXhwIjoxNzg0MzIwMjE3fQ.dveZyWzl8zyxKEevIrjMbnuwNhpuv3kIGay0SA7WghU
+
+
+# POST http://localhost:5000/unidades
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1NDAxOSwiZXhwIjoxNzg0MjQwNDE5fQ.WtPztEy7mvQgmdg73O2HbxX8r8R7zOOc7Med-kafeXE
+# Content-Type: application/json
+
+# {
+#     "cve":"UNIDAD-001",
+#     "marca":"Nissan",
+#     "modelo":"NP300",
+#     "anio":2024,
+#     "version":"Frontier",
+#     "tipo":"Pickup",
+#     "clase":"Camioneta",
+#     "id_combustible":1,
+#     "color":"Blanco",
+#     "propietario":"FIBRATEC",
+#     "compra_arrendado":"Propio",
+#     "id_empresa":1,
+#     "id_sucursal":1,
+#     "capacidad_tanque":80,
+#     "es_utilitario":"No Utilitario"
+# }
+
+# GET http://localhost:5000/unidades/1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1NDAxOSwiZXhwIjoxNzg0MjQwNDE5fQ.WtPztEy7mvQgmdg73O2HbxX8r8R7zOOc7Med-kafeXE
+
+# PUT http://localhost:5000/unidades/1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1NDAxOSwiZXhwIjoxNzg0MjQwNDE5fQ.WtPztEy7mvQgmdg73O2HbxX8r8R7zOOc7Med-kafeXE
+# Content-Type: application/json
+
+
+# {
+#     "marca":"Nissan",
+#     "anio":2025,
+#     "version":"NP300 Frontier",
+#     "tipo":"Pickup",
+#     "clase":"Camioneta",
+#     "modelo":"NP300 PRO",
+
+#     "id_combustible":1,
+
+#     "color":"Rojo",
+
+#     "id_empresa":1,
+#     "id_sucursal":1,
+
+#     "capacidad_tanque":85,
+
+#     "es_utilitario":"Utilitario"
+# }
+
+
+# GET http://localhost:5000/unidades/1
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1NjM5MiwiZXhwIjoxNzg0MjQyNzkyfQ.XYnFCDs-uLySbfwqDEeajB0QO5Hhsalvhhu6OmBLA1g
+
+# PATCH http://localhost:5000/unidades/1/estado
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE1NDAxOSwiZXhwIjoxNzg0MjQwNDE5fQ.WtPztEy7mvQgmdg73O2HbxX8r8R7zOOc7Med-kafeXE
+# Content-Type: application/json
+
+
+# {
+#     "estado":1
+# }
+
+### CREAR ASIGNACIÓN
+
+# GET http://localhost:5000/asignaciones
+
+### CREAR ASIGNACIÓN
+
+
+
+# ### Crear asignación
+
+# POST http://localhost:5000/asignaciones
+# Content-Type: application/json
+
+# {
+#     "id_usuario": 3,
+#     "id_unidad": 3,
+#     "fecha_asignacion": "2026-07-15"
+# }
+
+# GET http://localhost:5000/asignaciones
+
+# GET http://localhost:5000/asignaciones/1
+
+# PUT http://localhost:5000/asignaciones/1
+# Content-Type: application/json
+
+# {
+#     "id_usuario": 6,
+#     "id_unidad": 1,
+#     "fecha_asignacion": "2026-07-20",
+#     "fecha_fin": null
+# }
+
+# PATCH http://localhost:5000/asignaciones/1/status
+# Content-Type: application/json
+
+# {
+#     "status": "inactivo"
+# }
+
+#PLACAS
+### Crear placa
+
+# POST http://localhost:5000/placas
+# Content-Type: application/json
+
+# {
+#     "folio": "PL-2026-001",
+#     "placa": "ABC123D",
+#     "fecha_expedicion": "2026-01-15",
+#     "fecha_vigencia": "2029-01-15",
+#     "requiere_renovacion": 0,
+#     "status": "activa",
+#     "monto_pago": 1890.50,
+#     "id_unidad": 1
+# }
+
+### Obtener todas las placas
+
+# GET http://localhost:5000/placas
+
+### Obtener placa por ID
+
+# GET http://localhost:5000/placas/1
+
+### Actualizar placa
+
+# PUT http://localhost:5000/placas/1
+# Content-Type: application/json
+
+# {
+#     "folio": "PL-2026-001",
+#     "placa": "ABC123D",
+#     "fecha_expedicion": "2026-01-15",
+#     "fecha_vigencia": "2030-01-15",
+#     "requiere_renovacion": 0,
+#     "monto_pago": 2000.00,
+#     "id_unidad": 1
+# }
+
+### Cambiar status
+
+# PATCH http://localhost:5000/placas/1/status
+# Content-Type: application/json
+
+# {
+#     "status": "activa"
+# }
+
+
+#CREDITOS
+
+### Crear crédito
+
+# POST http://localhost:5000/creditos
+# Content-Type: application/json
+
+
+# {
+#     "nombre_credito":"Gasolinera Atlacomulco",
+#     "rfc":"GAS123456ABC",
+#     "regimen_fiscal":"601 General de Ley",
+#     "direccion":"Atlacomulco Estado de México",
+#     "telefono":"7121234567",
+#     "inicio_convenio":"2026-01-01",
+#     "vigencia":"Anual",
+#     "limite_credito":50000
+# }
+
+
+### Obtener créditos
+
+GET http://localhost:5000/creditos
+
+
+### Obtener crédito
+
+# GET http://localhost:5000/creditos/1
+
+### Actualizar crédito
+
+# PUT http://localhost:5000/creditos/1
+# Content-Type: application/json
+
+
+# {
+#     "nombre_credito":"Gasolinera Atlacomulco Renovada",
+#     "rfc":"GAS123456ABC",
+#     "regimen_fiscal":"601 General de Ley",
+#     "direccion":"Nueva dirección",
+#     "telefono":"7125555555",
+#     "inicio_convenio":"2026-01-01",
+#     "vigencia":"2 años",
+#     "limite_credito":75000
+# }
+
+### Desactivar crédito
+
+# PATCH http://localhost:5000/creditos/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":1
+# }
+
+
+### Crear transferencia
+
+# POST http://localhost:5000/transferencias
+# Content-Type: application/json
+
+
+# {
+#     "nombre_gasolinera":"Pemex Atlacomulco"
+# }
+
+
+### Obtener transferencia
+
+# GET http://localhost:5000/transferencias/1
+
+### Actualizar transferencia
+
+# PUT http://localhost:5000/transferencias/1
+# Content-Type: application/json
+
+
+# {
+#     "nombre_gasolinera":"Pemex Contepec"
+# }
+
+# POST http://localhost:5000/unidades
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE2NzI1NSwiZXhwIjoxNzg0MjUzNjU1fQ.yIk3BihSbFDPm8j7u5SiD61idfjjHr3KTuEuUNRnnS4
+# Content-Type: application/json
+
+
+# {
+#     "cve":"UNIDAD-005",
+#     "marca":"Nissan",
+#     "modelo":"Frontier",
+#     "anio":2025,
+#     "version":"Pro4X",
+#     "tipo":"Pickup",
+#     "clase":"Camioneta",
+#     "id_combustible":1,
+#     "color":"Negro",
+#     "propietario":"FIBRATEC",
+#     "compra_arrendado":"Propio",
+#     "id_empresa":1,
+#     "id_sucursal":1,
+#     "capacidad_tanque":80,
+#     "es_utilitario":"Utilitario"
+# }
+
+# GET http://localhost:5000/unidades
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJ1c3VhcmlvIjoiY2FybG9zIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImlhdCI6MTc4NDE2NzI1NSwiZXhwIjoxNzg0MjUzNjU1fQ.yIk3BihSbFDPm8j7u5SiD61idfjjHr3KTuEuUNRnnS4
+
+### Crear préstamo
+
+# POST http://localhost:5000/prestamos
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":1,
+#     "fecha_inicio":"2026-07-15 08:00:00"
+# }
+
+### Obtener préstamos
+
+# GET http://localhost:5000/prestamos
+
+### Aprobar préstamo
+
+# PATCH http://localhost:5000/prestamos/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":"aprobado"
+# }
+
+### Entregar unidad
+
+# PATCH http://localhost:5000/prestamos/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":"entregado"
+# }
+
+### Devolver unidad
+
+# PATCH http://localhost:5000/prestamos/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":"devuelto"
+# }
+
+# POST http://localhost:5000/prestamos
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":7,
+#     "id_vehiculo":2,
+#     "fecha_inicio":"2026-07-15 08:00:00"
+# }
+
+
+# POST http://localhost:5000/prestamos
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":2,
+#     "fecha_inicio":"2026-07-15 08:00:00"
+# }
+
+# POST http://localhost:5000/prestamos
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":5,
+#     "fecha_inicio":"2026-07-15 09:00:00"
+# }
+
+# POST http://localhost:5000/prestamos
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":7,
+#     "id_vehiculo":2,
+#     "fecha_inicio":"2026-07-15 10:00:00"
+# }
+
+# PATCH http://localhost:5000/prestamos/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":"devuelto"
+# }
+
+
+### Crear solicitud combustible
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":1,
+#     "km_actual":25000,
+#     "litros_solicitados":30,
+#     "id_combustible":1,
+#     "id_metodo":1,
+#     "id_actividad":1,
+#     "nombre_gasolinera":"Gasolinera Atlacomulco",
+#     "observaciones":"Carga programada"
+# }
+
+### Obtener todas las solicitudes
+
+# GET http://localhost:5000/solicitudes
+
+
+### Obtener detalle solicitud
+
+# GET http://localhost:5000/solicitudes/1
+
+### Aprobar solicitud
+
+# PATCH http://localhost:5000/solicitudes/1/status
+# Content-Type: application/json
+
+
+# {
+#     "estado":"Rechazada"
+# }
+
+
+# PATCH http://localhost:5000/solicitudes/1/status
+
+# PATCH http://localhost:5000/solicitudes/1/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Rechazada"
+# }
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+# {
+#     "id_usuario": 6,
+#     "id_vehiculo": 1,
+#     "km_actual": 26000,
+#     "litros_solicitados": 25,
+#     "id_combustible": 1,
+#     "id_metodo": 1,
+#     "id_actividad": 1,
+#     "nombre_gasolinera": "Gasolinera Atlacomulco",
+#     "observaciones": "Prueba de rechazo"
+# }
+
+# PATCH http://localhost:5000/solicitudes/2/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Rechazada",
+#     "motivo_rechazo":"Prueba de notificación"
+# }
+
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":2
+# }
+
+
+# PATCH http://localhost:5000/solicitudes/2/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":2,
+#     "litros_cargados":20,
+#     "precio_por_litro":24.30,
+#     "km_final":26200
+# }
+
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":2,
+#     "numero_ticket":"B101112",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":20,
+#     "precio_por_litro":24.35,
+#     "km_final":26300,
+#     "foto_ticket":"ticket.jpg",
+#     "foto_tablero_final":"tablero.jpg"
+# }
+
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":4,
+#     "numero_ticket":"B101114",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":30,
+#     "precio_por_litro":24.50,
+#     "km_final":27000,
+#     "foto_ticket":"ticket3.jpg",
+#     "foto_tablero_final":"tablero3.jpg"
+# }
+
+
+# GET http://localhost:5000/solicitudes/3
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":3,
+#     "numero_ticket":"B101113",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":25,
+#     "precio_por_litro":24.50,
+#     "km_final":26000,
+#     "foto_ticket":"ticket2.jpg",
+#     "foto_tablero_final":"tablero2.jpg"
+# }
+
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":1,
+#     "km_actual":27000,
+#     "litros_solicitados":30,
+#     "id_combustible":1,
+#     "id_metodo":1,
+#     "id_actividad":1,
+#     "nombre_gasolinera":"Gasolinera Atlacomulco",
+#     "observaciones":"Prueba consumo"
+# }
+
+# PATCH http://localhost:5000/solicitudes/4/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+# PATCH http://localhost:5000/solicitudes/8/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":8,
+#     "numero_ticket":"B101116",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":20,
+#     "precio_por_litro":24.50,
+#     "km_final":42000,
+#     "foto_ticket":"ticket4.jpg",
+#     "foto_tablero_final":"tablero4.jpg"
+# }
+
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud": 8,
+#     "numero_ticket": "B101120",
+#     "fecha_compra": "2026-07-16",
+#     "litros_cargados": 20,
+#     "precio_por_litro": 24.50,
+#     "km_final": 42000,
+#     "litros_final_tablero": 58,
+#     "foto_ticket": "ticket.jpg",
+#     "foto_tablero_final": "tablero.jpg"
+# }
+
+
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+# {
+#     "id_usuario":6,
+#     "id_vehiculo":1,
+#     "km_actual":45001,
+#     "litros_solicitados":2,
+#     "id_combustible":1,
+#     "id_metodo":1,
+#     "id_actividad":1,
+#     "nombre_gasolinera":"Gasolinera Atlacomulco",
+#     "observaciones":"Prueba generación de alerta"
+# }
+
+# PATCH http://localhost:5000/solicitudes/9/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":9,
+#     "numero_ticket":"B101121",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":20,
+#     "precio_por_litro":24.50,
+#     "km_final":45000,
+#     "litros_final_tablero":78,
+#     "foto_ticket":"ticket.jpg",
+#     "foto_tablero_final":"tablero.jpg"
+# }
+
+# PATCH http://localhost:5000/solicitudes/10/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":10,
+#     "numero_ticket":"B101122",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":1,
+#     "precio_por_litro":24.50,
+#     "km_final":47000,
+#     "litros_final_tablero":80,
+#     "foto_ticket":"ticket.jpg",
+#     "foto_tablero_final":"tablero.jpg"
+# }
+
+
+
+# POST http://localhost:5000/solicitudes
+# Content-Type: application/json
+
+# {
+#     "id_usuario":3,
+#     "id_vehiculo":3,
+#     "km_actual":15001,
+#     "litros_solicitados":20,
+#     "id_combustible":1,
+#     "id_metodo":1,
+#     "id_actividad":1,
+#     "id_credito":1,
+#     "nombre_gasolinera":"Gasolinera Atlacomulco Renovada",
+#     "observaciones":"Prueba completa unidad 003 control de consumo"
+# }
+
+# PATCH http://localhost:5000/solicitudes/11/status
+# Content-Type: application/json
+
+# {
+#     "estado":"Aprobada"
+# }
+
+# POST http://localhost:5000/tickets
+# Content-Type: application/json
+
+# {
+#     "id_solicitud":11,
+#     "numero_ticket":"B101126",
+#     "fecha_compra":"2026-07-16",
+#     "litros_cargados":20,
+#     "precio_por_litro":24.50,
+#     "km_final":17000,
+#     "litros_final_tablero":48,
+#     "foto_ticket":"ticket_unidad003.jpg",
+#     "foto_tablero_final":"tablero_unidad003.jpg"
+# }
+
+
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"analuz040319@gmail.com",
+#     "password":"zcp2ln5j"
+# }
+
+
+# POST http://localhost:5000/auth/change-password
+# Content-Type: application/json
+
+# {
+#     "id_usuario":5,
+#     "passwordNueva":"Ana12345"
+# }
+
+
+# POST http://localhost:5000/auth/login
+# Content-Type: application/json
+
+# {
+#     "login":"analuz040319@gmail.com",
+#     "password":"oyn6vtxp"
+# }
+
+# POST http://localhost:5000/auth/forgot-password
+# Content-Type: application/json
+
+# {
+#     "correo":"analuz040319@gmail.com"
+# }

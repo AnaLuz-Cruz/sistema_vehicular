@@ -1,0 +1,574 @@
+
+.login-container {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background-image: linear-gradient(
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.6)
+    );
+
+}
+
+
+
+/* Tarjeta principal */
+
+.login-card {
+
+    width: 380px;
+
+    background: #bbc1ca98;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    box-shadow: 
+    0px 8px 20px rgba(0,0,0,0.4);
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    text-align:center;
+
+}
+
+
+
+
+
+.login-card h2 {
+
+    text-align:center;
+
+    margin-bottom:5px;
+
+    font-size:1.6rem;
+
+    color:#000000;
+
+}
+
+
+
+
+
+.login-subtitle {
+
+    text-align:center;
+
+    color:#000000;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+
+/* Logo */
+
+.login-logo {
+
+    width:100%;
+
+    height:120px;
+
+    object-fit:contain;
+
+    object-position:center;
+
+    margin-bottom:-10px;
+
+}
+
+
+
+
+
+/* Inputs */
+
+.login-card input {
+
+
+    padding:10px;
+
+
+    border:none;
+
+
+    border-radius:8px;
+
+
+    outline:none;
+
+
+    font-size:1rem;
+
+
+    background:#bbb1b1a1;
+
+
+    color:#000000;
+
+
+    transition:all 0.3s ease;
+
+
+    text-align:center;
+
+
+    margin-bottom:13px;
+
+
+    width:100%;
+
+
+}
+
+
+
+
+
+.login-card input::placeholder {
+
+    color:#000000;
+
+}
+
+
+
+
+
+.login-card input:focus {
+
+
+    background:#a1a6ac;
+
+
+    box-shadow:
+
+    0 0 0 2px #a10000;
+
+
+}
+
+
+
+
+
+/* Botón */
+
+.login-card button {
+
+
+    background:#a10000;
+
+
+    font-weight:bold;
+
+
+    border:none;
+
+
+    padding:10px;
+
+
+    border-radius:8px;
+
+
+    cursor:pointer;
+
+
+    transition:all 0.3s ease;
+
+
+    color:rgb(160, 157, 157);
+
+
+    width:100%;
+
+
+}
+
+
+
+
+
+.login-card button:hover {
+
+
+    background:#020202;
+
+
+}
+
+
+
+
+
+/* Mensaje de error */
+
+.login-error {
+
+
+    color:#f00f0f;
+
+
+    text-align:center;
+
+
+    font-size:0.9rem;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+/* Recuperación contraseña */
+
+.recuperacion {
+
+
+    text-align:center;
+
+
+    margin-top:8px;
+
+
+}
+
+
+
+.recuperar-boton {
+
+
+    background:none !important;
+
+
+    border:none !important;
+
+
+    color:#a30000;
+
+
+    font-size:0.9rem;
+
+
+    cursor:pointer;
+
+
+    text-decoration:underline;
+
+
+    transition:color .3s ease;
+
+
+    font-weight:500;
+
+
+    padding:0;
+
+
+}
+
+
+
+.recuperar-boton:hover {
+
+
+    color:#a70000;
+
+
+    text-decoration:none;
+
+
+}
+
+
+
+
+
+/* Pantallas pequeñas */
+
+@media(max-width:480px){
+
+
+    .login-card {
+
+
+        width:90%;
+
+
+        padding:25px;
+
+
+    }
+
+
+
+    .login-logo {
+
+
+        height:100px;
+
+
+    }
+
+
+
+}
+
+/* ==================================
+   Cambiar contraseña
+================================== */
+
+
+.password-container {
+
+    min-height: 100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#eef2f5;
+
+}
+
+
+
+/* Tarjeta cambiar contraseña */
+
+.password-card {
+
+    width:400px;
+
+    background:#bbc1ca98;
+
+    padding:30px;
+
+    border-radius:12px;
+
+    box-shadow:
+    0px 8px 20px rgba(0,0,0,0.4);
+
+    text-align:center;
+
+}
+
+
+
+/* Título */
+
+.password-card h3 {
+
+    color:#000000;
+
+    font-size:1.6rem;
+
+    margin-bottom:10px;
+
+    font-weight:bold;
+
+}
+
+
+
+/* Texto */
+
+.password-subtitle {
+
+    color:#000000;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+
+/* Inputs */
+
+.password-card input {
+
+
+    padding:10px;
+
+
+    border:none;
+
+
+    border-radius:8px;
+
+
+    outline:none;
+
+
+    font-size:1rem;
+
+
+    background:#bbb1b1a1;
+
+
+    color:#000;
+
+
+    text-align:center;
+
+
+    width:100%;
+
+
+    margin-bottom:15px;
+
+
+    transition:all .3s ease;
+
+
+}
+
+
+
+.password-card input::placeholder {
+
+
+    color:#000000;
+
+
+}
+
+
+
+.password-card input:focus {
+
+
+    background:#a1a6ac;
+
+
+    box-shadow:
+
+    0 0 0 2px #a10000;
+
+
+}
+
+
+
+
+
+/* Botón guardar */
+
+.password-button {
+
+
+    background:#a10000;
+
+
+    color:rgb(160,157,157);
+
+
+    font-weight:bold;
+
+
+    border:none;
+
+
+    width:100%;
+
+
+    padding:10px;
+
+
+    border-radius:8px;
+
+
+    cursor:pointer;
+
+
+    transition:all .3s ease;
+
+
+}
+
+
+
+.password-button:hover {
+
+
+    background:#020202;
+
+
+    color:white;
+
+
+}
+
+
+
+
+
+/* Mensaje */
+
+.password-message {
+
+
+    background:#d9d9d9;
+
+
+    color:#000;
+
+
+    border-radius:8px;
+
+
+    padding:10px;
+
+
+    margin-bottom:15px;
+
+
+    font-weight:bold;
+
+
+}
+
+
+
+
+
+/* Responsive */
+
+@media(max-width:480px){
+
+
+    .password-card {
+
+
+        width:90%;
+
+
+        padding:25px;
+
+
+    }
+
+
+}

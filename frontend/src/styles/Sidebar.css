@@ -1,0 +1,50 @@
+:root {
+    --primary: #111;      /* Azul oscuro principal */
+    --accent: #111;       /* Azul un poco más claro para hover */
+    --text: #ecf0f1;         /* Blanco suave */
+    --sidebar-width: 250px;
+    --navbar-height: 70px;
+}
+
+.sidebar {
+    position: fixed;
+    left: 10;
+    top: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    background: var(--primary); /* Azul oscuro */
+    color: var(--text);
+    transition: 0.3s;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Sombra para dar profundidad */
+}
+
+.sidebar.cerrado {
+    width: 70px;
+}
+
+.logo {
+    height: var(--navbar-height);
+    background: #111; /* Un tono ligeramente más oscuro para el logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+nav a:hover {
+    background: var(--accent); /* Azul más claro al pasar el mouse */
+    color: #a99f9f;
+    border-left: 4px solid #e74c3c; /* Borde rojo para resaltar selección */
+}
