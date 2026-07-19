@@ -1,0 +1,253 @@
+    :root {
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 60px;
+    --header-height: 50px;
+    --header-bg: #1f1f1f;
+    --header-border: #d60000;
+    --mobile-header-bg: #1f1f1f;
+    --accent-color: #d60000;
+    --content-bg: #f1f5f9;
+    --text-light: #ffffff;
+    --text-muted: #cccccc;
+    }
+
+    /* === TIPOGRAFÍA GLOBAL === */
+    body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: var(--content-bg);
+    }
+
+    /* === LAYOUT GENERAL === */
+    .layout {
+    display: flex;
+    height: 100%;
+    }
+
+    /* === MAIN AREA === */
+    .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease;
+    }
+
+    /* === CONTENIDO PRINCIPAL === */
+    .content {
+    flex: 1;
+    padding: 0;
+    background-color: var(--content-bg);
+    overflow-y: auto;
+    }
+
+    /* === HEADER DESKTOP === */
+    .header-desktop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--header-bg);
+    padding: 0 20px;
+    height: var(--header-height);
+    border-bottom: 2px solid var(--header-border);
+    color: var(--text-light);
+    }
+
+    .header-left {
+    flex: 1;
+    display: flex;
+    }
+
+    .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    }
+
+    .img-circle-desktop {
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    cursor: pointer;
+    }
+
+    /* === HEADER MOBILE === */
+    .header-mobile {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--mobile-header-bg);
+    color: var(--text-light);
+    padding: 8px 20px;
+    border-bottom: 2px solid var(--accent-color);
+    position: relative;
+    z-index: 1000;
+    }
+
+    .menu-btn {
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    }
+
+    .mobile-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative; /* necesario para dropdown */
+    }
+
+
+    .img-circle-mobile {
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    cursor: pointer;
+    }
+
+    /* === ICONO HOME === */
+    .icon-home-desktop {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    }
+
+    .icon-home-desktop:hover {
+    color: #ff1a1a;
+    }
+
+    .icon-home-desktop {
+    color: #ffffff;
+    }
+
+    /* === NOMBRE DE USUARIO === */
+    .sidebar-username-desktop {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    }
+
+    /* === CARET GENERAL === */
+    .caret,
+    .caret-mobile {
+    display: inline-block;
+    margin-left: 8px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--text-light);
+    transition: transform 0.3s ease;
+    }
+
+    .caret.rotate,
+    .caret-mobile.rotate {
+    transform: rotate(180deg);
+    }
+
+    /* === DROPDOWN MENU === */
+    .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    margin-top: 8px;
+    padding: 0;
+    list-style: none;
+    z-index: 1001;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    color: var(--text-light);
+    border-radius: 6px;
+    min-width: 160px;
+    }
+
+    .dropdown-menu li {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #444;
+    }
+
+    .dropdown-menu li:hover {
+    background-color: #3a3a3a;
+    }
+
+    .dropdown-menu li:last-child {
+    border-bottom: none;
+    }
+
+    /* === OVERLAY MÓVIL === */
+    .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 900;
+    display: none;
+    }
+
+    /* === RESPONSIVE: MÓVIL === */
+    @media (max-width: 768px) {
+    .header-mobile {
+        display: flex;
+    }
+
+    .header-desktop {
+        display: none;
+    }
+
+    .overlay {
+        display: block;
+    }
+
+    .content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        top: 50px;
+        right: 10px;
+        width: 180px;
+    }
+
+    .sidebar-username-desktop {
+        color: var(--text-light);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    }
+
+    .icon-user-desktop {
+    font-size: 1.6rem;
+    color: var(--text-light);
+    cursor: pointer;
+    }
+
+    .icon-user-mobile {
+    font-size: 1.8rem;
+    color: var(--text-light);
+    cursor: pointer;
+    }
+
+
+/* === RESPONSIVE: ESCRITORIO === */
+    @media (min-width: 769px) {
+    .main {
+        margin-left: var(--sidebar-width);
+    }
+
+    .main.layout--collapsed {
+        margin-left: var(--sidebar-collapsed-width);
+    }
+    }

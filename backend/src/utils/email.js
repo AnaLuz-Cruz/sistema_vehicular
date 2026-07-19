@@ -1,65 +1,24 @@
 import nodemailer from "nodemailer";
 
-
-const testAccount = await nodemailer.createTestAccount();
-
-
-
 const transporter = nodemailer.createTransport({
-
-    host: "smtp.ethereal.email",
-
-    port: 587,
-
-    secure: false,
-
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: process.env.EMAIL_SECURE === "true",
     auth: {
-
-        user: testAccount.user,
-
-        pass: testAccount.pass
-
-    }
-
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
 });
 
-
-
-const enviarCorreo = async (
-    destinatario,
-    asunto,
-    html
-)=>{
-
-
+const enviarCorreo = async (destinatario, asunto, html) => {
     const info = await transporter.sendMail({
-
-        from:
-        `"Sistema Control Vehicular" <${testAccount.user}>`,
-
+        from: `"Sistema Control Vehicular" <${process.env.EMAIL_USER}>`,
         to: destinatario,
-
         subject: asunto,
-
-        html
-
+        html,
     });
 
-
-    console.log(
-        "Correo generado:"
-    );
-
-
-    console.log(
-        nodemailer.getTestMessageUrl(info)
-    );
-
-
+    console.log("Correo enviado:", info.messageId);
 };
 
-
-
-export {
-    enviarCorreo
-};
+export { enviarCorreo };    

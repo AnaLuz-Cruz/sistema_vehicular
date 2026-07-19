@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import "../styles/Layout.css";
+import "../styles/MainLayout.css";
 
 
 export default function Layout({children}) {

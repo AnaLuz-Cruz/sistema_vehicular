@@ -8,8 +8,26 @@ import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 
-// Middlewares globales
-app.use(cors());
+    // Orígenes permitidos
+    const allowedOrigins = [
+    "http://localhost:5173",
+    process.env.FRONTEND_URL,
+    ];
+
+    // Middlewares globales
+    app.use(
+    cors({
+        origin(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("No permitido por CORS"));
+        }
+        },
+        credentials: true,
+    })
+    );
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 ========================== */
 
 app.use("/", routes);
+
 /* ==========================
     Ruta no encontrada
 ========================== */
