@@ -109,6 +109,37 @@ const createUnidad = async(unidad)=>{
     }
 
 
+    if(!unidad.capacidad_tanque){
+
+        throw new Error(
+            "La capacidad del tanque es obligatoria."
+        );
+
+    }    
+
+    if(!unidad.kilometraje_actual){
+
+        throw new Error(
+            "El kilometraje es obligatorio."
+        );
+
+    }    
+
+    if(!unidad.id_empresa){
+
+        throw new Error(
+            "Seleccione una empresa."
+        );
+
+    }    
+
+    if(!unidad.id_sucursal){
+
+        throw new Error(
+            "Seleccione una sucursal."
+        );
+
+    }    
 
     const existe =
         await findDuplicate(

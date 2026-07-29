@@ -13,6 +13,7 @@ import prestamosRoutes from "./prestamosRoutes.js";
 import solicitudesRoutes from "./solicitudesRoutes.js";
 import ticketsRoutes from "./ticketsRoutes.js";
 import testRoutes from "./testRoutes.js";
+import combustiblesRoutes from "./combustiblesRoutes.js";
 
 
 import verifyToken from "../middlewares/verifyToken.js";
@@ -80,13 +81,13 @@ router.use("/prestamos", prestamosRoutes);
 router.use("/solicitudes", solicitudesRoutes);
 
 // Tickets
-router.use(
-    "/tickets",
-    ticketsRoutes
-);
+router.use( "/tickets", ticketsRoutes );
 
 // email
 
 router.use("/test", testRoutes);
+
+// combustibles 
+router.use("/combustibles", combustiblesRoutes);
 
 export default router;

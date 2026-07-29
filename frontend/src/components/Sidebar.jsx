@@ -1,5 +1,6 @@
 import {
-    Link
+    Link,
+    useLocation
 } from "react-router-dom";
 
 
@@ -10,8 +11,10 @@ import {
     FaCar,
     FaClipboardList,
     FaCreditCard,
-    FaPlus,
-    FaList
+    FaList,
+    FaGasPump,
+    FaMoneyCheckAlt,
+    FaExchangeAlt
 } from "react-icons/fa";
 
 
@@ -24,9 +27,7 @@ import "../styles/Sidebar.css";
 
 
 
-export default function Sidebar({
-    abierto
-}){
+export default function Sidebar({abierto}){
 
 
 const {
@@ -34,13 +35,26 @@ const {
 }=useAuth();
 
 
+const rol = usuario?.rol;
 
-const rol=usuario?.rol;
+const location = useLocation();
+
+
+
+const linkActivo=(ruta)=>{
+
+    return location.pathname===ruta
+    ?
+    "active"
+    :
+    "";
+
+};
+
 
 
 
 return (
-
 
 <aside
 
@@ -52,14 +66,16 @@ className={
     "sidebar cerrado"
 }
 
-
 >
 
 
 
 <div className="logo">
 
-Control Vehicular
+    <img 
+        src="/logo1.png"
+        alt="Control Vehicular"
+    />
 
 </div>
 
@@ -68,32 +84,35 @@ Control Vehicular
 <div className="perfil">
 
 
-<div className="avatar">
+    <div className="avatar">
 
-👤
+        <img 
+            src="/nino.png"
+            alt="Usuario"
+        />
+
+    </div>
+
+
+
+    <div className="datos">
+
+
+        <strong>
+            {usuario?.nombre}
+        </strong>
+
+        <br></br>
+
+        <small>
+            {rol}
+        </small>
+
+
+    </div>
+
 
 </div>
-
-
-
-<div className="datos">
-
-
-<strong>
-{usuario?.nombre}
-</strong>
-
-
-<small>
-{rol}
-</small>
-
-
-</div>
-
-
-</div>
-
 
 
 
@@ -102,7 +121,10 @@ Control Vehicular
 
 
 
-<Link to="/dashboard">
+<Link 
+to="/dashboard"
+className={linkActivo("/dashboard")}
+>
 
 <FaHome/>
 
@@ -115,6 +137,14 @@ Dashboard
 
 
 
+
+
+
+{/* ================================
+        SUPERUSUARIO
+     ================================ */}
+
+
 {
 rol==="Superusuario" &&
 
@@ -122,74 +152,175 @@ rol==="Superusuario" &&
 
 
 <Link to="/usuarios">
-
 <FaUsers/>
-
 <span>
 Usuarios
 </span>
-
 </Link>
-
 
 
 <Link to="/empresas">
-
 <FaBuilding/>
-
 <span>
 Empresas
 </span>
-
 </Link>
 
 
-</>
+
+<Link to="/sucursales">
+<FaBuilding/>
+<span>
+Sucursales
+</span>
+</Link>
 
 
-}
 
+<Link to="/areas">
+<FaList/>
+<span>
+Áreas
+</span>
+</Link>
 
-
-
-
-{
-(rol==="Administrador" ||
-rol==="Superusuario")
-&&
-
-<>
 
 
 <Link to="/unidades">
-
 <FaCar/>
-
 <span>
 Unidades
 </span>
-
 </Link>
 
 
 
 <Link to="/asignaciones">
-
 <FaList/>
-
 <span>
 Asignaciones
 </span>
+</Link>
 
+
+
+<Link to="/placas">
+<FaCar/>
+<span>
+Placas
+</span>
+</Link>
+
+
+
+<Link to="/creditos">
+<FaCreditCard/>
+<span>
+Créditos
+</span>
+</Link>
+
+
+
+<Link to="/transferencias">
+<FaExchangeAlt/>
+<span>
+Transferencias
+</span>
+</Link>
+
+
+
+<Link to="/prestamos">
+<FaCar/>
+<span>
+Préstamos
+</span>
+</Link>
+
+
+
+<Link to="/solicitudes">
+<FaClipboardList/>
+<span>
+Solicitudes
+</span>
 </Link>
 
 
 </>
 
+}
+
+
+
+
+
+
+
+
+
+{/* ================================
+        ADMINISTRADOR
+     ================================ */}
+
+
+
+{
+rol==="Administrador" &&
+
+<>
+
+<Link to="/unidades">
+<FaCar/>
+<span>
+Unidades
+</span>
+</Link>
+
+
+
+<Link to="/asignaciones">
+<FaList/>
+<span>
+Asignaciones
+</span>
+</Link>
+
+
+
+<Link to="/placas">
+<FaCar/>
+<span>
+Placas
+</span>
+</Link>
+
+
+
+<Link to="/prestamos">
+<FaCar/>
+<span>
+Préstamos
+</span>
+</Link>
+
+
+</>
 
 }
 
 
+
+
+
+
+
+
+
+{/* ================================
+        CONTABILIDAD
+     ================================ */}
 
 
 {
@@ -197,33 +328,42 @@ rol==="Contabilidad" &&
 
 <>
 
-
 <Link to="/solicitudes">
-
 <FaClipboardList/>
-
 <span>
 Solicitudes
 </span>
-
 </Link>
-
 
 
 
 <Link to="/creditos">
-
 <FaCreditCard/>
-
 <span>
 Créditos
 </span>
+</Link>
 
+
+
+<Link to="/transferencias">
+<FaMoneyCheckAlt/>
+<span>
+Transferencias
+</span>
+</Link>
+
+
+
+<Link to="/tickets">
+<FaGasPump/>
+<span>
+Tickets
+</span>
 </Link>
 
 
 </>
-
 
 }
 
@@ -231,15 +371,23 @@ Créditos
 
 
 
+
+
+
+
+{/* ================================
+        CONDUCTOR
+     ================================ */}
+
+
 {
 rol==="Conductor" &&
 
 <>
 
-
 <Link to="/solicitudes/nueva">
 
-<FaPlus/>
+<FaClipboardList/>
 
 <span>
 Nueva solicitud
@@ -263,7 +411,6 @@ Mis solicitudes
 
 </>
 
-
 }
 
 
@@ -275,6 +422,5 @@ Mis solicitudes
 
 
 );
-
 
 }

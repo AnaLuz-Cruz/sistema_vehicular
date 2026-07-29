@@ -48,8 +48,6 @@ const create = async (data) => {
 };
 
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Obtener todas las asignaciones
@@ -81,7 +79,8 @@ const findAll = async () => {
             un.modelo,
 
 
-            s.nombre AS sucursal
+            s.nombre AS sucursal,
+            e.nombre_comercial AS empresa
 
 
         FROM Asignaciones a
@@ -98,6 +97,9 @@ const findAll = async () => {
         INNER JOIN Sucursales s
         ON un.id_sucursal = s.id_sucursal
 
+        LEFT JOIN Empresas e
+        ON un.id_empresa = e.id_empresa        
+
 
         ORDER BY a.id_asignacion DESC
 
@@ -105,8 +107,6 @@ const findAll = async () => {
 
 
     const [rows] = await pool.query(sql);
-
-
     return rows;
 
 };
@@ -169,10 +169,6 @@ const findById = async(id)=>{
 
 };
 
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Actualizar asignación
@@ -210,12 +206,9 @@ const update = async(id,data)=>{
     ];
 
 
-    const [result]=await pool.query(sql,values);
-
     await pool.query(sql, values);
 
     return await findById(id);
-    // return result.affectedRows > 0;
 
 };
 
@@ -260,42 +253,6 @@ const updateStatus=async(id,status)=>{
 };
 
 
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Buscar asignación activa por usuario
-|--------------------------------------------------------------------------
-*/
-
-// const findActiveByUser=async(id_usuario)=>{
-
-
-//     const sql=`
-
-//         SELECT *
-
-//         FROM Asignaciones
-
-//         WHERE id_usuario=?
-
-//         AND status='activo'
-
-//     `;
-
-
-//     const [rows]=await pool.query(sql,[id_usuario]);
-
-
-//     return rows[0];
-
-// };
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Buscar asignación activa por unidad
@@ -308,15 +265,10 @@ const findActiveByUnit=async(id_unidad)=>{
     const sql=`
 
         SELECT *
-
         FROM Asignaciones
-
         WHERE id_unidad=?
-
         AND status='activo'
-
         LIMIT 1
-
     `;
 
 

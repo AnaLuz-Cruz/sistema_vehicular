@@ -93,15 +93,35 @@ const findById = async(id_unidad)=>{
 
 
     const sql = `
+    SELECT
 
-        SELECT *
+    u.*,
 
-        FROM Unidades
+    c.nombre AS combustible,
 
-        WHERE id_unidad = ?
+    e.nombre_comercial AS empresa,
 
-        LIMIT 1
+    s.nombre AS sucursal,
 
+    r.nombre AS responsable
+
+    FROM Unidades u
+
+    LEFT JOIN combustible c
+    ON u.id_combustible=c.id_combustible
+
+    LEFT JOIN empresas e
+    ON u.id_empresa=e.id_empresa
+
+    LEFT JOIN sucursales s
+    ON u.id_sucursal=s.id_sucursal
+
+    LEFT JOIN usuarios r
+    ON u.id_responsable=r.id_usuario
+
+    WHERE u.id_unidad=?
+
+    LIMIT 1
     `;
 
 
@@ -161,7 +181,40 @@ const findDuplicate = async(valor)=>{
 };
 
 
+const findDuplicateExceptId = async (
+    id,
+    cve,
+    niv
+) => {
 
+    const sql = `
+
+        SELECT id_unidad
+
+        FROM Unidades
+
+        WHERE
+
+        (cve=? OR niv=?)
+
+        AND id_unidad<>?
+
+        LIMIT 1
+
+    `;
+
+    const [rows]=await pool.execute(
+        sql,
+        [
+            cve,
+            niv,
+            id
+        ]
+    );
+
+    return rows[0] || null;
+
+};
 
 
 /*
@@ -277,54 +330,100 @@ const update = async (
     unidad
 ) => {
 
+    const repetido =
+    await findDuplicateExceptId(
+
+        id_unidad,
+
+        unidad.cve,
+
+        unidad.niv
+
+    );
+
+    if(repetido){
+
+        throw new Error(
+            "Ya existe otra unidad con esa clave o NIV."
+        );
+
+    }    
 
     const sql = `
-
         UPDATE Unidades
-
         SET
-
+            cve = ?,
             marca = ?,
             anio = ?,
             version = ?,
             tipo = ?,
             clase = ?,
             modelo = ?,
+            niv = ?,
+            motor = ?,
+            transmision = ?,
             id_combustible = ?,
             color = ?,
+            telefono_gps = ?,
+            sim_gps = ?,
+            uid = ?,
+            propietario = ?,
+            compra_arrendado = ?,
             id_empresa = ?,
             id_sucursal = ?,
+            fecha_adquisicion = ?,
+            valor_factura = ?,
+            url_factura = ?,
+            foto_url = ?,
+            kilometraje_actual = ?,
+            litros_actuales = ?,
+            tolerancia = ?,
             capacidad_tanque = ?,
-            es_utilitario = ?
+            kilometraje_por_litro = ?,
+            id_credito = ?,
+            es_utilitario = ?,
+            id_responsable = ?
 
         WHERE id_unidad = ?
-
     `;
 
+    await pool.execute(sql, [
 
+        unidad.cve,
+        unidad.marca,
+        unidad.anio,
+        unidad.version,
+        unidad.tipo,
+        unidad.clase,
+        unidad.modelo,
+        unidad.niv,
+        unidad.motor,
+        unidad.transmision,
+        unidad.id_combustible,
+        unidad.color,
+        unidad.telefono_gps,
+        unidad.sim_gps,
+        unidad.uid,
+        unidad.propietario,
+        unidad.compra_arrendado,
+        unidad.id_empresa,
+        unidad.id_sucursal,
+        unidad.fecha_adquisicion,
+        unidad.valor_factura,
+        unidad.url_factura,
+        unidad.foto_url,
+        unidad.kilometraje_actual,
+        unidad.litros_actuales,
+        unidad.tolerancia,
+        unidad.capacidad_tanque,
+        unidad.kilometraje_por_litro,
+        unidad.id_credito,
+        unidad.es_utilitario,
+        unidad.id_responsable,
 
-    await pool.execute(
-        sql,
-        [
+        id_unidad
 
-            unidad.marca,
-            unidad.anio,
-            unidad.version,
-            unidad.tipo,
-            unidad.clase,
-            unidad.modelo,
-            unidad.id_combustible,
-            unidad.color,
-            unidad.id_empresa ?? null,
-            unidad.id_sucursal ?? null,
-            unidad.capacidad_tanque ?? 0,
-            unidad.es_utilitario ?? "No Utilitario",
-
-            id_unidad
-
-        ]
-    );
-
+    ]);
 
 };
 
@@ -374,6 +473,7 @@ export {
     findAll,
     findById,
     findDuplicate,
+    findDuplicateExceptId,
     create,
     update,
     updateStatus
