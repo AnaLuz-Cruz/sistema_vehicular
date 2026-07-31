@@ -22,7 +22,7 @@ const register = async (usuario) => {
 
 
     const sql = `
-        INSERT INTO Usuarios
+        INSERT INTO usuarios
         (
             nombre,
             usuario,
@@ -90,7 +90,7 @@ const findUserForLogin = async (login) => {
             id_empresa,
             id_sucursal,
             id_area
-        FROM Usuarios
+        FROM usuarios
         WHERE usuario = ?
         OR correo = ?
         LIMIT 1                
@@ -115,7 +115,7 @@ const findUserByUsername = async (usuario) => {
 
     const sql = `
         SELECT id_usuario
-        FROM Usuarios
+        FROM usuarios
         WHERE usuario = ?
         LIMIT 1
     `;
@@ -130,7 +130,7 @@ const findUserByEmail = async (correo) => {
 
     const sql = `
         SELECT id_usuario
-        FROM Usuarios
+        FROM usuarios
         WHERE correo = ?
         LIMIT 1
     `;
@@ -144,7 +144,7 @@ const findUserByEmail = async (correo) => {
 const updateLastLogin = async (idUsuario) => {
 
     const sql = `
-        UPDATE Usuarios
+        UPDATE usuarios
         SET fecha_ultimo_login = NOW()
         WHERE id_usuario = ?
     `;
@@ -166,7 +166,7 @@ const updatePassword = async (
 
 
     const sql = `
-        UPDATE Usuarios
+        UPDATE usuarios
         SET password = ?
         WHERE correo = ?
     `;
@@ -196,7 +196,7 @@ const changePassword = async (
 
 
     const sql = `
-        UPDATE Usuarios
+        UPDATE usuarios
         SET 
             password = ?,
             must_change_password = 0
