@@ -16,7 +16,9 @@ const app = express();
         "http://localhost:4000",
 
         "http://192.168.137.1:5173",
-        "http://192.168.1.100:5173"
+        "http://192.168.1.100:5173",
+
+        "https://sistema-vehicular.vercel.app"
     ];
 
     // Middlewares globales 
