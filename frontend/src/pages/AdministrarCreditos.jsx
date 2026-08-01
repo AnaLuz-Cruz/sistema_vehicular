@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
     obtenerCreditos,
     obtenerCredito,
-    crearCredito,
     actualizarCredito,
     cambiarEstadoCredito
 } from "../services/creditosService";
@@ -15,11 +14,11 @@ export default function AdministrarCreditos() {
 
     const [creditos, setCreditos] = useState([]);
 
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
     const [creditoEditar, setCreditoEditar] = useState(null);
 
     const [buscar, setBuscar] = useState("");
+
+
 
     const cargarDatos = async () => {
 
@@ -37,37 +36,16 @@ export default function AdministrarCreditos() {
 
     };
 
+
+
     useEffect(() => {
 
         cargarDatos();
 
     }, []);
 
-    const guardarCredito = async (datos) => {
 
-        try {
 
-            await crearCredito(datos);
-
-            await cargarDatos();
-
-            setMostrarFormulario(false);
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-
-                error.response?.data?.message ||
-
-                "Error al guardar."
-
-            );
-
-        }
-
-    };
 
     const editarCredito = async (id) => {
 
@@ -77,8 +55,6 @@ export default function AdministrarCreditos() {
 
             setCreditoEditar(credito);
 
-            setMostrarFormulario(true);
-
         } catch (error) {
 
             console.error(error);
@@ -86,6 +62,9 @@ export default function AdministrarCreditos() {
         }
 
     };
+
+
+
 
     const actualizarDatos = async (datos) => {
 
@@ -99,25 +78,64 @@ export default function AdministrarCreditos() {
 
             );
 
+            alert("Crédito actualizado correctamente.");
+
             await cargarDatos();
 
             setCreditoEditar(null);
 
-            setMostrarFormulario(false);
-
         } catch (error) {
 
             console.error(error);
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "Error al actualizar."
+
+            );
 
         }
 
     };
 
-    const cambiarEstado = async (id, estado) => {
+
+
+
+    const cambiarEstado = async (
+
+        id,
+
+        estado
+
+    ) => {
+
+        const confirmar = window.confirm(
+
+            `¿Desea ${
+
+                estado === 1
+
+                    ? "activar"
+
+                    : "desactivar"
+
+            } este crédito?`
+
+        );
+
+        if (!confirmar) return;
 
         try {
 
-            await cambiarEstadoCredito(id, estado);
+            await cambiarEstadoCredito(
+
+                id,
+
+                estado
+
+            );
 
             await cargarDatos();
 
@@ -129,15 +147,32 @@ export default function AdministrarCreditos() {
 
     };
 
-    const creditosFiltrados = creditos.filter((credito) =>
 
-        credito.nombre_credito?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-        credito.rfc?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-        credito.telefono?.toLowerCase().includes(buscar.toLowerCase())
+    const creditosFiltrados = creditos.filter(
+
+        (credito) =>
+
+            credito.nombre_credito
+                ?.toLowerCase()
+                .includes(buscar.toLowerCase())
+
+            ||
+
+            credito.rfc
+                ?.toLowerCase()
+                .includes(buscar.toLowerCase())
+
+            ||
+
+            credito.telefono
+                ?.toLowerCase()
+                .includes(buscar.toLowerCase())
 
     );
+
+
 
     return (
 
@@ -165,60 +200,6 @@ export default function AdministrarCreditos() {
 
             />
 
-            {
-
-                mostrarFormulario
-
-                    ?
-
-                    <FormularioCredito
-
-                        credito={creditoEditar}
-
-                        onGuardar={
-
-                            creditoEditar
-
-                                ?
-
-                                actualizarDatos
-
-                                :
-
-                                guardarCredito
-
-                        }
-
-                        onCancelar={() => {
-
-                            setMostrarFormulario(false);
-
-                            setCreditoEditar(null);
-
-                        }}
-
-                    />
-
-                    :
-
-                    <button
-
-                        onClick={() => {
-
-                            setCreditoEditar(null);
-
-                            setMostrarFormulario(true);
-
-                        }}
-
-                    >
-
-                        Nuevo Crédito
-
-                    </button>
-
-            }
-
             <hr />
 
             <TablaCreditos
@@ -230,6 +211,26 @@ export default function AdministrarCreditos() {
                 onEstado={cambiarEstado}
 
             />
+
+            {
+
+                creditoEditar &&
+
+                <FormularioCredito
+
+                    credito={creditoEditar}
+
+                    onGuardar={actualizarDatos}
+
+                    onCancelar={() =>
+
+                        setCreditoEditar(null)
+
+                    }
+
+                />
+
+            }
 
         </div>
 

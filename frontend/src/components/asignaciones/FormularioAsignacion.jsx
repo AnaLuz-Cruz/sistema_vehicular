@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import "../../styles/Formularios.css";
+
+
 export default function FormularioAsignacion({
 
     asignacion,

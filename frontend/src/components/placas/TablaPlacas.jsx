@@ -1,3 +1,5 @@
+import "../../styles/Tabla.css";
+
 export default function TablaPlacas({
 
     placas,
@@ -24,265 +26,246 @@ export default function TablaPlacas({
 
     return (
 
-        <table>
+        <div className="tabla-container">
 
-            <thead>
+            <table className="tabla-usuarios">
 
-                <tr>
+                <thead>
 
-                    <th>Folio</th>
+                    <tr>
 
-                    <th>Placa</th>
+                        <th>Folio</th>
+                        <th>Placa</th>
+                        <th>Unidad</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Expedición</th>
+                        <th>Vigencia</th>
+                        <th>Monto</th>
+                        <th>Renovación</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
 
-                    <th>Unidad</th>
+                    </tr>
 
-                    <th>Marca</th>
+                </thead>
 
-                    <th>Modelo</th>
+                <tbody>
 
-                    <th>Expedición</th>
+                    {
 
-                    <th>Vigencia</th>
+                        placas.map((placa) => {
 
-                    <th>Monto</th>
+                            const estadoClase =
+                                placa.status === "activa"
+                                    ? "badge badge-activo"
+                                    : "badge badge-inactivo";
 
-                    <th>Renovación</th>
+                            const estadoTexto =
+                                placa.status === "activa"
+                                    ? "Activa"
+                                    : placa.status === "vencida"
+                                    ? "Vencida"
+                                    : "Cancelada";
 
-                    <th>Estado</th>
+                            return (
 
-                    <th>Acciones</th>
+                                <tr key={placa.id_placa}>
 
-                </tr>
+                                    <td>
+                                        {placa.folio || "-"}
+                                    </td>
 
-            </thead>
+                                    <td>
+                                        {placa.placa}
+                                    </td>
 
-            <tbody>
+                                    <td>
+                                        {placa.cve || "-"}
+                                    </td>
 
-                {
+                                    <td>
+                                        {placa.marca || "-"}
+                                    </td>
 
-                    placas.map((placa) => (
+                                    <td>
+                                        {placa.modelo || "-"}
+                                    </td>
 
-                        <tr key={placa.id_placa}>
+                                    <td>
 
-                            <td>
+                                        {
 
-                                {placa.folio || "-"}
+                                            placa.fecha_expedicion
+                                                ? placa.fecha_expedicion.substring(0, 10)
+                                                : "-"
 
-                            </td>
+                                        }
 
-                            <td>
+                                    </td>
 
-                                {placa.placa}
+                                    <td>
 
-                            </td>
+                                        {
 
-                            <td>
+                                            placa.fecha_vigencia
+                                                ? placa.fecha_vigencia.substring(0, 10)
+                                                : "-"
 
-                                {placa.cve || "-"}
+                                        }
 
-                            </td>
+                                    </td>
 
-                            <td>
+                                    <td>
 
-                                {placa.marca || "-"}
+                                        $
 
-                            </td>
+                                        {
 
-                            <td>
+                                            Number(
+                                                placa.monto_pago
+                                            ).toFixed(2)
 
-                                {placa.modelo || "-"}
+                                        }
 
-                            </td>
+                                    </td>
 
-                            <td>
+                                    <td>
 
-                                {
+                                        {
 
-                                    placa.fecha_expedicion
+                                            Number(
+                                                placa.requiere_renovacion
+                                            ) === 1
+                                                ? "Sí"
+                                                : "No"
 
-                                        ? placa.fecha_expedicion.substring(0, 10)
+                                        }
 
-                                        : "-"
+                                    </td>
 
-                                }
+                                    <td>
 
-                            </td>
+                                        <span className={estadoClase}>
 
-                            <td>
+                                            {estadoTexto}
 
-                                {
+                                        </span>
 
-                                    placa.fecha_vigencia
+                                    </td>
 
-                                        ? placa.fecha_vigencia.substring(0, 10)
+                                    <td>
 
-                                        : "-"
+                                        <div className="acciones-cell">
 
-                                }
+                                            <button
 
-                            </td>
+                                                className="btn-accion btn-editar"
 
-                            <td>
+                                                onClick={() =>
+                                                    onEditar(
+                                                        placa.id_placa
+                                                    )
+                                                }
 
-                                $
+                                            >
 
-                                {
+                                                Editar
 
-                                    Number(
-                                        placa.monto_pago
-                                    ).toFixed(2)
+                                            </button>
 
-                                }
+                                            {
 
-                            </td>
+                                                placa.status !== "activa" && (
 
-                            <td>
+                                                    <button
 
-                                {
+                                                        className="btn-accion btn-estado-activar"
 
-                                    Number(
-                                        placa.requiere_renovacion
-                                    ) === 1
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                placa.id_placa,
+                                                                "activa"
+                                                            )
+                                                        }
 
-                                        ? "Sí"
+                                                    >
 
-                                        : "No"
+                                                        Activar
 
-                                }
-
-                            </td>
-
-                            <td>
-
-                                {
-
-                                    placa.status === "activa"
-
-                                        ? "Activa"
-
-                                        : placa.status === "vencida"
-
-                                        ? "Vencida"
-
-                                        : "Cancelada"
-
-                                }
-
-                            </td>
-
-                            <td>
-
-                                <button
-
-                                    onClick={() =>
-
-                                        onEditar(
-                                            placa.id_placa
-                                        )
-
-                                    }
-
-                                >
-
-                                    Editar
-
-                                </button>
-
-                                {
-
-                                    placa.status !== "activa"
-
-                                        &&
-
-                                        <button
-
-                                            onClick={() =>
-
-                                                onEstado(
-
-                                                    placa.id_placa,
-
-                                                    "activa"
+                                                    </button>
 
                                                 )
 
                                             }
 
-                                        >
+                                            {
 
-                                            Activar
+                                                placa.status !== "vencida" && (
 
-                                        </button>
+                                                    <button
 
-                                }
+                                                        className="btn-accion btn-estado-desactivar"
 
-                                {
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                placa.id_placa,
+                                                                "vencida"
+                                                            )
+                                                        }
 
-                                    placa.status !== "vencida"
+                                                    >
 
-                                        &&
+                                                        Vencer
 
-                                        <button
-
-                                            onClick={() =>
-
-                                                onEstado(
-
-                                                    placa.id_placa,
-
-                                                    "vencida"
+                                                    </button>
 
                                                 )
 
                                             }
 
-                                        >
+                                            {
 
-                                            Vencer
+                                                placa.status !== "cancelada" && (
 
-                                        </button>
+                                                    <button
 
-                                }
+                                                        className="btn-accion btn-estado-desactivar"
 
-                                {
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                placa.id_placa,
+                                                                "cancelada"
+                                                            )
+                                                        }
 
-                                    placa.status !== "cancelada"
+                                                    >
 
-                                        &&
+                                                        Cancelar
 
-                                        <button
-
-                                            onClick={() =>
-
-                                                onEstado(
-
-                                                    placa.id_placa,
-
-                                                    "cancelada"
+                                                    </button>
 
                                                 )
 
                                             }
 
-                                        >
+                                        </div>
 
-                                            Cancelar
+                                    </td>
 
-                                        </button>
+                                </tr>
 
-                                }
+                            );
 
-                            </td>
+                        })
 
-                        </tr>
+                    }
 
-                    ))
+                </tbody>
 
-                }
+            </table>
 
-            </tbody>
-
-        </table>
+        </div>
 
     );
 

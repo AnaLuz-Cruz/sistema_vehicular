@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
     obtenerEmpresas,
     obtenerEmpresa,
-    crearEmpresa,
     actualizarEmpresa,
     cambiarEstadoEmpresa
 } from "../services/empresasService";
@@ -15,20 +14,14 @@ export default function AdministrarEmpresas() {
 
     const [empresas, setEmpresas] = useState([]);
 
-    const [mostrarFormulario, setMostrarFormulario] =
-        useState(false);
-
     const [empresaEditar, setEmpresaEditar] =
         useState(null);
-
-
 
     const cargarEmpresas = async () => {
 
         try {
 
-            const data =
-                await obtenerEmpresas();
+            const data = await obtenerEmpresas();
 
             setEmpresas(data);
 
@@ -40,48 +33,19 @@ export default function AdministrarEmpresas() {
 
     };
 
-
-
     useEffect(() => {
 
         cargarEmpresas();
 
     }, []);
 
-
-
-
-    const guardarEmpresa = async (empresa) => {
-
-        try {
-
-            await crearEmpresa(empresa);
-
-            await cargarEmpresas();
-
-            setMostrarFormulario(false);
-
-        } catch (error) {
-
-            console.error(error);
-
-        }
-
-    };
-
-
-
-
     const editarEmpresa = async (id) => {
 
         try {
 
-            const empresa =
-                await obtenerEmpresa(id);
+            const empresa = await obtenerEmpresa(id);
 
             setEmpresaEditar(empresa);
-
-            setMostrarFormulario(true);
 
         } catch (error) {
 
@@ -91,12 +55,7 @@ export default function AdministrarEmpresas() {
 
     };
 
-
-
-
-    const actualizarDatosEmpresa = async (
-        empresa
-    ) => {
+    const actualizarDatosEmpresa = async (empresa) => {
 
         try {
 
@@ -105,46 +64,50 @@ export default function AdministrarEmpresas() {
                 empresa
             );
 
+            alert("Empresa actualizada correctamente.");
+
             await cargarEmpresas();
 
             setEmpresaEditar(null);
-
-            setMostrarFormulario(false);
 
         } catch (error) {
 
             console.error(error);
 
+            alert(
+                error.response?.data?.message ||
+                "No fue posible actualizar la empresa."
+            );
+
         }
 
     };
-
-
-
 
     const cambiarEstado = async (
         id,
         estatus
     ) => {
 
+        const confirmar = window.confirm(
+
+            `¿Está seguro de ${
+                estatus === "Activa"
+                    ? "activar"
+                    : "desactivar"
+            } esta empresa?`
+
+        );
+
+        if (!confirmar) return;
+
         try {
-
-            const confirmar = window.confirm(
-
-                `¿Desea ${
-                    estatus === "Activa"
-                        ? "activar"
-                        : "desactivar"
-                } esta empresa?`
-
-            );
-
-            if (!confirmar) return;
 
             await cambiarEstadoEmpresa(
                 id,
                 estatus
             );
+
+            alert("Estado actualizado correctamente.");
 
             await cargarEmpresas();
 
@@ -152,61 +115,40 @@ export default function AdministrarEmpresas() {
 
             console.error(error);
 
+            alert(
+                error.response?.data?.message ||
+                "No fue posible actualizar el estado."
+            );
+
         }
 
     };
-
-
 
     return (
 
         <div>
 
-            <h1>
-                Administrar Empresas
-            </h1>
+            <h1>Administrar Empresas</h1>
 
             {
-
-                mostrarFormulario ?
+                empresaEditar && (
 
                     <FormularioEmpresa
 
                         empresa={empresaEditar}
 
-                        onGuardar={
-                            empresaEditar
-                                ? actualizarDatosEmpresa
-                                : guardarEmpresa
+                        onGuardar={actualizarDatosEmpresa}
+
+                        onCancelar={() =>
+
+                            setEmpresaEditar(null)
+
                         }
-
-                        onCancelar={() => {
-
-                            setEmpresaEditar(null);
-
-                            setMostrarFormulario(false);
-
-                        }}
 
                     />
 
-                    :
-
-                    <button
-
-                        onClick={() =>
-                            setMostrarFormulario(true)
-                        }
-
-                    >
-
-                        Nueva Empresa
-
-                    </button>
-
+                )
             }
-
-            <hr />
 
             <TablaEmpresas
 

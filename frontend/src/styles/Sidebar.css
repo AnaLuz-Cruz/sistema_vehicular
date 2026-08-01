@@ -500,3 +500,87 @@
     align-items: center;
     gap: 4px;
     }
+
+
+    /* Toggle del menú principal con submenú */
+.sidebar .submenu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.sidebar .submenu-toggle:hover {
+    background-color: rgba(240, 160, 160, 0.08);
+}
+
+/* Icono de flecha para indicar despliegue */
+.sidebar .submenu-toggle svg:last-child {
+    margin-left: auto;
+    font-size: 0.8rem;
+}
+
+/* Contenedor del submenú */
+.sidebar .submenu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 24px; /* Indentación para que se note la jerarquía */
+    background-color: rgba(91, 90, 90, 0.15); /* Opcional: un tono ligeramente más oscuro o sutil */
+}
+
+/* Enlaces dentro del submenú (más pequeños) */
+.sidebar .submenu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    font-size: 0.95rem; /* Letra más pequeña que el menú principal */
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.sidebar .submenu a:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Iconos de los submenús más pequeños en proporción */
+.sidebar .submenu a svg {
+    font-size: 0.85rem;
+}
+
+.logout{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 18px;
+
+    margin-top:auto;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    border-top:1px solid rgba(255,255,255,.12);
+
+    transition:.25s;
+}
+
+.logout:hover{
+    background:#c62828;
+}
+
+.logout svg{
+    font-size:18px;
+}
+
+.logout span{
+    font-size:15px;
+}

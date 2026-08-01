@@ -1,3 +1,5 @@
+import "../../styles/Tabla.css";
+
 export default function TablaSolicitudes({
 
     solicitudes,
@@ -9,7 +11,7 @@ export default function TablaSolicitudes({
 }) {
 
 
-    if(solicitudes.length===0){
+    if (solicitudes.length === 0) {
 
         return (
 
@@ -24,272 +26,225 @@ export default function TablaSolicitudes({
     }
 
 
-
     return (
 
-        <table>
+        <div className="tabla-container">
 
+            <table className="tabla-usuarios">
 
-            <thead>
+                <thead>
 
-                <tr>
+                    <tr>
 
-                    <th>Usuario</th>
+                        <th>Usuario</th>
+                        <th>Unidad</th>
+                        <th>Combustible</th>
+                        <th>Litros</th>
+                        <th>KM</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
 
-                    <th>Unidad</th>
+                    </tr>
 
-                    <th>Combustible</th>
+                </thead>
 
-                    <th>Litros</th>
+                <tbody>
 
-                    <th>KM</th>
+                    {
 
-                    <th>Fecha</th>
+                        solicitudes.map((solicitud) => {
 
-                    <th>Estado</th>
+                            let badgeClass = "badge badge-inactivo";
 
-                    <th>Acciones</th>
+                            switch (solicitud.estado) {
 
-                </tr>
+                                case "Aprobada":
+                                case "Finalizado":
+                                    badgeClass = "badge badge-activo";
+                                    break;
 
-            </thead>
+                                case "Pendiente":
+                                case "Rechazada":
+                                default:
+                                    badgeClass = "badge badge-inactivo";
+                                    break;
 
+                            }
 
+                            return (
 
+                                <tr key={solicitud.id_solicitud}>
 
+                                    <td>
 
-            <tbody>
+                                        {solicitud.usuario}
 
+                                    </td>
 
-                {
+                                    <td>
 
-                    solicitudes.map((solicitud)=>(
+                                        {solicitud.cve}
 
+                                    </td>
 
-                        <tr
+                                    <td>
 
-                            key={solicitud.id_solicitud}
+                                        {solicitud.combustible}
 
-                        >
+                                    </td>
 
+                                    <td>
 
-                            <td>
+                                        {solicitud.litros_solicitados} L
 
-                                {solicitud.usuario}
+                                    </td>
 
-                            </td>
+                                    <td>
 
+                                        {solicitud.km_actual}
 
+                                    </td>
 
-                            <td>
+                                    <td>
 
-                                {solicitud.cve}
+                                        {
 
-                            </td>
+                                            solicitud.fecha_solicitud
 
+                                                ?
 
+                                                solicitud.fecha_solicitud.substring(0, 10)
 
-                            <td>
+                                                :
 
-                                {solicitud.combustible}
-
-                            </td>
-
-
-
-                            <td>
-
-                                {solicitud.litros_solicitados}
-
-                                {" L"}
-
-                            </td>
-
-
-
-                            <td>
-
-                                {solicitud.km_actual}
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-
-                                    solicitud.fecha_solicitud
-
-                                    ?
-
-                                    solicitud.fecha_solicitud.substring(0,10)
-
-                                    :
-
-                                    "-"
-
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-                                {solicitud.estado}
-
-                            </td>
-
-
-
-
-                            <td>
-
-
-                                <button
-
-                                    onClick={()=>
-
-
-                                        onDetalle(
-
-                                            solicitud.id_solicitud
-
-                                        )
-
-
-                                    }
-
-                                >
-
-                                    Ver detalle
-
-                                </button>
-
-
-
-
-
-
-                                {
-
-                                    solicitud.estado === "Pendiente"
-
-                                    &&
-
-
-                                    <>
-
-
-                                        <button
-
-                                            onClick={()=>
-
-
-                                                onEstado(
-
-                                                    solicitud.id_solicitud,
-
-                                                    "Aprobada"
-
-                                                )
-
-
-                                            }
-
-                                        >
-
-                                            Aprobar
-
-                                        </button>
-
-
-
-
-
-                                        <button
-
-                                            onClick={()=>
-
-
-                                                onEstado(
-
-                                                    solicitud.id_solicitud,
-
-                                                    "Rechazada"
-
-                                                )
-
-
-                                            }
-
-                                        >
-
-                                            Rechazar
-
-                                        </button>
-
-
-                                    </>
-
-                                }
-
-
-
-
-
-                                {
-
-                                    solicitud.estado === "Aprobada"
-
-                                    &&
-
-
-                                    <button
-
-                                        onClick={()=>
-
-
-                                            onEstado(
-
-                                                solicitud.id_solicitud,
-
-                                                "Finalizado"
-
-                                            )
-
+                                                "-"
 
                                         }
 
-                                    >
+                                    </td>
 
-                                        Finalizar
+                                    <td>
 
-                                    </button>
+                                        <span className={badgeClass}>
+
+                                            {solicitud.estado}
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <div className="acciones-cell">
+
+                                            <button
+
+                                                className="btn-accion btn-editar"
+
+                                                onClick={() =>
+                                                    onDetalle(
+                                                        solicitud.id_solicitud
+                                                    )
+                                                }
+
+                                            >
+
+                                                Ver detalle
+
+                                            </button>
 
 
-                                }
+                                            {
+
+                                                solicitud.estado === "Pendiente" && (
+
+                                                    <>
+
+                                                        <button
+
+                                                            className="btn-accion btn-estado-activar"
+
+                                                            onClick={() =>
+                                                                onEstado(
+                                                                    solicitud.id_solicitud,
+                                                                    "Aprobada"
+                                                                )
+                                                            }
+
+                                                        >
+
+                                                            Aprobar
+
+                                                        </button>
+
+                                                        <button
+
+                                                            className="btn-accion btn-estado-desactivar"
+
+                                                            onClick={() =>
+                                                                onEstado(
+                                                                    solicitud.id_solicitud,
+                                                                    "Rechazada"
+                                                                )
+                                                            }
+
+                                                        >
+
+                                                            Rechazar
+
+                                                        </button>
+
+                                                    </>
+
+                                                )
+
+                                            }
 
 
+                                            {
 
-                            </td>
+                                                solicitud.estado === "Aprobada" && (
 
+                                                    <button
 
-                        </tr>
+                                                        className="btn-accion btn-estado-activar"
 
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                solicitud.id_solicitud,
+                                                                "Finalizado"
+                                                            )
+                                                        }
 
-                    ))
+                                                    >
 
-                }
+                                                        Finalizar
 
+                                                    </button>
 
-            </tbody>
+                                                )
 
+                                            }
 
-        </table>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            );
+
+                        })
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     );
-
 
 }

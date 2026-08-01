@@ -1,3 +1,5 @@
+import "../../styles/Tabla.css";
+
 export default function TablaCreditos({
 
     creditos,
@@ -24,220 +26,194 @@ export default function TablaCreditos({
     }
 
 
-
     return (
 
-        <table>
+        <div className="tabla-container">
 
-            <thead>
+            <table className="tabla-usuarios">
 
-                <tr>
+                <thead>
 
-                    <th>Nombre</th>
+                    <tr>
 
-                    <th>RFC</th>
+                        <th>Nombre</th>
+                        <th>RFC</th>
+                        <th>Teléfono</th>
+                        <th>Inicio convenio</th>
+                        <th>Vigencia</th>
+                        <th>Límite crédito</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
 
-                    <th>Teléfono</th>
+                    </tr>
 
-                    <th>Inicio convenio</th>
-
-                    <th>Vigencia</th>
-
-                    <th>Límite crédito</th>
-
-                    <th>Estado</th>
-
-                    <th>Acciones</th>
-
-                </tr>
-
-            </thead>
+                </thead>
 
 
-            <tbody>
+                <tbody>
 
-                {
+                    {
 
-                    creditos.map((credito) => (
+                        creditos.map((credito) => {
 
-                        <tr key={credito.id_credito}>
+                            const activo = Number(credito.estado) === 1;
 
+                            return (
 
-                            <td>
-
-                                {credito.nombre_credito}
-
-                            </td>
+                                <tr key={credito.id_credito}>
 
 
-                            <td>
+                                    <td>
 
-                                {credito.rfc || "-"}
+                                        {credito.nombre_credito}
 
-                            </td>
-
-
-                            <td>
-
-                                {credito.telefono || "-"}
-
-                            </td>
+                                    </td>
 
 
-                            <td>
+                                    <td>
 
-                                {
+                                        {credito.rfc || "-"}
 
-                                    credito.inicio_convenio
-
-                                        ? credito.inicio_convenio.substring(0,10)
-
-                                        : "-"
-
-                                }
-
-                            </td>
+                                    </td>
 
 
-                            <td>
+                                    <td>
 
-                                {credito.vigencia || "-"}
+                                        {credito.telefono || "-"}
 
-                            </td>
+                                    </td>
 
 
-                            <td>
+                                    <td>
 
-                                {
+                                        {
 
-                                    credito.limite_credito
+                                            credito.inicio_convenio
 
-                                        ? 
+                                                ? credito.inicio_convenio.substring(0, 10)
 
-                                        `$${Number(
+                                                : "-"
+
+                                        }
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {credito.vigencia || "-"}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {
+
                                             credito.limite_credito
-                                        ).toLocaleString("es-MX", {
-                                            minimumFractionDigits: 2
-                                        })}`
 
-                                        :
+                                                ?
 
-                                        "$0.00"
+                                                `$${Number(
+                                                    credito.limite_credito
+                                                ).toLocaleString("es-MX", {
+                                                    minimumFractionDigits: 2
+                                                })}`
 
-                                }
+                                                :
 
-                            </td>
-
-
-                            <td>
-
-                                {
-
-                                    Number(credito.estado) === 1
-
-                                        ?
-
-                                        "Activo"
-
-                                        :
-
-                                        "Inactivo"
-
-                                }
-
-                            </td>
-
-
-                            <td>
-
-
-                                <button
-
-                                    onClick={() =>
-
-                                        onEditar(
-
-                                            credito.id_credito
-
-                                        )
-
-                                    }
-
-                                >
-
-                                    Editar
-
-                                </button>
-
-
-                                {
-
-
-                                    Number(credito.estado) === 1
-
-                                    ?
-
-                                    <button
-
-                                        onClick={() =>
-
-                                            onEstado(
-
-                                                credito.id_credito,
-
-                                                0
-
-                                            )
+                                                "$0.00"
 
                                         }
 
-                                    >
-
-                                        Desactivar
-
-                                    </button>
+                                    </td>
 
 
-                                    :
+                                    <td>
+
+                                        <span
+                                            className={
+                                                activo
+                                                    ? "badge badge-activo"
+                                                    : "badge badge-inactivo"
+                                            }
+                                        >
+
+                                            {
+                                                activo
+                                                    ? "Activo"
+                                                    : "Inactivo"
+                                            }
+
+                                        </span>
+
+                                    </td>
 
 
-                                    <button
+                                    <td>
 
-                                        onClick={() =>
+                                        <div className="acciones-cell">
 
-                                            onEstado(
+                                            <button
 
-                                                credito.id_credito,
+                                                className="btn-accion btn-editar"
 
-                                                1
+                                                onClick={() =>
+                                                    onEditar(
+                                                        credito.id_credito
+                                                    )
+                                                }
 
-                                            )
+                                            >
 
-                                        }
+                                                Editar
 
-                                    >
-
-                                        Activar
-
-                                    </button>
-
-
-                                }
+                                            </button>
 
 
-                            </td>
+                                            <button
+
+                                                className={
+                                                    activo
+                                                        ? "btn-accion btn-estado-desactivar"
+                                                        : "btn-accion btn-estado-activar"
+                                                }
+
+                                                onClick={() =>
+                                                    onEstado(
+                                                        credito.id_credito,
+                                                        activo ? 0 : 1
+                                                    )
+                                                }
+
+                                            >
+
+                                                {
+                                                    activo
+                                                        ? "Desactivar"
+                                                        : "Activar"
+                                                }
+
+                                            </button>
+
+                                        </div>
+
+                                    </td>
 
 
-                        </tr>
+                                </tr>
 
-                    ))
+                            );
 
-                }
+                        })
 
-            </tbody>
+                    }
 
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
 
     );
 

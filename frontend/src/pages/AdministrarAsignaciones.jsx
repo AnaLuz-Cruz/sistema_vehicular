@@ -3,16 +3,20 @@ import { useEffect, useState } from "react";
 import {
     obtenerAsignaciones,
     obtenerAsignacion,
-    crearAsignacion,
     actualizarAsignacion,
     cambiarEstadoAsignacion
 } from "../services/asignacionesService";
 
-import { obtenerUsuarios } from "../services/usuariosService";
-import { obtenerUnidades } from "../services/unidadesService";
+import {
+    obtenerUsuarios
+} from "../services/usuariosService";
 
-import FormularioAsignacion from "../components/asignaciones/FormularioAsignacion";
+import {
+    obtenerUnidades
+} from "../services/unidadesService";
+
 import TablaAsignaciones from "../components/asignaciones/TablaAsignaciones";
+import FormularioAsignacion from "../components/asignaciones/FormularioAsignacion";
 
 export default function AdministrarAsignaciones() {
 
@@ -22,11 +26,11 @@ export default function AdministrarAsignaciones() {
 
     const [unidades, setUnidades] = useState([]);
 
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
     const [asignacionEditar, setAsignacionEditar] = useState(null);
 
     const [buscar, setBuscar] = useState("");
+
+
 
     const cargarDatos = async () => {
 
@@ -47,9 +51,7 @@ export default function AdministrarAsignaciones() {
             ]);
 
             setAsignaciones(asignacionesData);
-
             setUsuarios(usuariosData);
-
             setUnidades(unidadesData);
 
         } catch (error) {
@@ -60,44 +62,25 @@ export default function AdministrarAsignaciones() {
 
     };
 
+
+
     useEffect(() => {
 
         cargarDatos();
 
     }, []);
 
-    const guardarAsignacion = async (datos) => {
 
-        try {
 
-            await crearAsignacion(datos);
-
-            await cargarDatos();
-
-            setMostrarFormulario(false);
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                error.response?.data?.message ||
-                "Error al guardar."
-            );
-
-        }
-
-    };
 
     const editarAsignacion = async (id) => {
 
         try {
 
-            const asignacion = await obtenerAsignacion(id);
+            const asignacion =
+                await obtenerAsignacion(id);
 
             setAsignacionEditar(asignacion);
-
-            setMostrarFormulario(true);
 
         } catch (error) {
 
@@ -106,6 +89,8 @@ export default function AdministrarAsignaciones() {
         }
 
     };
+
+
 
     const actualizarDatos = async (datos) => {
 
@@ -119,27 +104,62 @@ export default function AdministrarAsignaciones() {
 
             );
 
+            alert("Asignación actualizada correctamente.");
+
             await cargarDatos();
 
             setAsignacionEditar(null);
-
-            setMostrarFormulario(false);
 
         } catch (error) {
 
             console.error(error);
 
+            alert(
+
+                error.response?.data?.message ||
+
+                "Error al actualizar."
+
+            );
+
         }
 
     };
 
-    const cambiarEstado = async (id, status) => {
+
+
+    const cambiarEstado = async (
+
+        id,
+
+        status
+
+    ) => {
+
+        const confirmar = window.confirm(
+
+            `¿Desea ${
+
+                status === 1
+
+                    ? "activar"
+
+                    : "desactivar"
+
+            } esta asignación?`
+
+        );
+
+        if (!confirmar) return;
 
         try {
 
             await cambiarEstadoAsignacion(
+
                 id,
+
                 status
+
             );
 
             await cargarDatos();
@@ -152,17 +172,29 @@ export default function AdministrarAsignaciones() {
 
     };
 
-    const asignacionesFiltradas = asignaciones.filter(a =>
 
-        a.usuario?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-        a.cve?.toLowerCase().includes(buscar.toLowerCase()) ||
+    const asignacionesFiltradas =
 
-        a.marca?.toLowerCase().includes(buscar.toLowerCase()) ||
+        asignaciones.filter(a =>
 
-        a.sucursal?.toLowerCase().includes(buscar.toLowerCase())
+            a.usuario?.toLowerCase().includes(buscar.toLowerCase())
 
-    );
+            ||
+
+            a.cve?.toLowerCase().includes(buscar.toLowerCase())
+
+            ||
+
+            a.marca?.toLowerCase().includes(buscar.toLowerCase())
+
+            ||
+
+            a.sucursal?.toLowerCase().includes(buscar.toLowerCase())
+
+        );
+
+
 
     return (
 
@@ -183,68 +215,12 @@ export default function AdministrarAsignaciones() {
                 value={buscar}
 
                 onChange={(e) =>
+
                     setBuscar(e.target.value)
+
                 }
 
             />
-
-            {
-
-                mostrarFormulario
-
-                    ?
-
-                    <FormularioAsignacion
-
-                        asignacion={asignacionEditar}
-
-                        usuarios={usuarios}
-
-                        unidades={unidades}
-
-                        onGuardar={
-
-                            asignacionEditar
-
-                                ?
-
-                                actualizarDatos
-
-                                :
-
-                                guardarAsignacion
-
-                        }
-
-                        onCancelar={() => {
-
-                            setMostrarFormulario(false);
-
-                            setAsignacionEditar(null);
-
-                        }}
-
-                    />
-
-                    :
-
-                    <button
-
-                        onClick={() => {
-
-                            setAsignacionEditar(null);
-
-                            setMostrarFormulario(true);
-
-                        }}
-
-                    >
-
-                        Nueva Asignación
-
-                    </button>
-
-            }
 
             <hr />
 
@@ -257,6 +233,30 @@ export default function AdministrarAsignaciones() {
                 onEstado={cambiarEstado}
 
             />
+
+            {
+
+                asignacionEditar &&
+
+                <FormularioAsignacion
+
+                    asignacion={asignacionEditar}
+
+                    usuarios={usuarios}
+
+                    unidades={unidades}
+
+                    onGuardar={actualizarDatos}
+
+                    onCancelar={() =>
+
+                        setAsignacionEditar(null)
+
+                    }
+
+                />
+
+            }
 
         </div>
 

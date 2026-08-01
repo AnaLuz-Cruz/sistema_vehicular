@@ -4,63 +4,70 @@ import {
 
     obtenerUnidades,
     obtenerUnidad,
-    crearUnidad,
     actualizarUnidad,
     cambiarEstadoUnidad
 
 } from "../services/unidadesService";
 
-import { obtenerEmpresas } from "../services/empresasService";
-import { obtenerSucursales } from "../services/sucursalesService";
-import { obtenerCombustibles } from "../services/combustiblesService";
+import {
+
+    obtenerEmpresas
+
+} from "../services/empresasService";
+
+import {
+
+    obtenerSucursales
+
+} from "../services/sucursalesService";
+
+import {
+
+    obtenerCombustibles
+
+} from "../services/combustiblesService";
 
 import FormularioUnidad from "../components/unidades/FormularioUnidad";
+
 import TablaUnidades from "../components/unidades/TablaUnidades";
+
 import DetalleUnidad from "../components/unidades/DetalleUnidad";
 
-export default function AdministrarUnidades(){
+export default function AdministrarUnidades() {
 
-    const [unidades,setUnidades] = useState([]);
+    const [unidades, setUnidades] = useState([]);
 
-    const [empresas,setEmpresas] = useState([]);
+    const [empresas, setEmpresas] = useState([]);
 
-    const [sucursales,setSucursales] = useState([]);
+    const [sucursales, setSucursales] = useState([]);
 
-    const [combustibles,setCombustibles] = useState([]);
+    const [combustibles, setCombustibles] = useState([]);
 
-    const [mostrarFormulario,setMostrarFormulario] = useState(false);
+    const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
-    const [unidadEditar,setUnidadEditar] = useState(null);
+    const [unidadEditar, setUnidadEditar] = useState(null);
 
-    const [mostrarDetalle,setMostrarDetalle]=useState(false);
+    const [mostrarDetalle, setMostrarDetalle] = useState(false);
 
-    const [unidadDetalle,setUnidadDetalle]=useState(null);
+    const [unidadDetalle, setUnidadDetalle] = useState(null);
 
-    const [buscar,setBuscar]=useState("");
+    const [buscar, setBuscar] = useState("");
 
-    const unidadesFiltradas =
+    const unidadesFiltradas = unidades.filter((u) =>
 
-    unidades.filter(u=>
+        u.cve?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-    u.cve?.toLowerCase().includes(buscar.toLowerCase())
+        u.marca?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-    ||
+        u.modelo?.toLowerCase().includes(buscar.toLowerCase()) ||
 
-    u.marca?.toLowerCase().includes(buscar.toLowerCase())
-
-    ||
-
-    u.modelo?.toLowerCase().includes(buscar.toLowerCase())
-
-    ||
-
-    u.empresa?.toLowerCase().includes(buscar.toLowerCase())
+        u.empresa?.toLowerCase().includes(buscar.toLowerCase())
 
     );
 
-    const cargarDatos = async()=>{
+    const cargarDatos = async () => {
 
-        try{
+        try {
 
             const [
 
@@ -86,7 +93,7 @@ export default function AdministrarUnidades(){
 
             setCombustibles(combustiblesData);
 
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
 
@@ -94,48 +101,23 @@ export default function AdministrarUnidades(){
 
     };
 
-
-
-    useEffect(()=>{
+    useEffect(() => {
 
         cargarDatos();
 
-    },[]);
+    }, []);
 
+    const editarUnidad = async (id) => {
 
+        try {
 
-    const guardarUnidad = async(unidad)=>{
-
-        try{
-
-            await crearUnidad(unidad);
-
-            await cargarDatos();
-
-            setMostrarFormulario(false);
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-    };
-
-
-
-    const editarUnidad = async(id)=>{
-
-        try{
-
-            const unidad =
-                await obtenerUnidad(id);
+            const unidad = await obtenerUnidad(id);
 
             setUnidadEditar(unidad);
 
             setMostrarFormulario(true);
 
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
 
@@ -143,11 +125,9 @@ export default function AdministrarUnidades(){
 
     };
 
+    const actualizarDatos = async (unidad) => {
 
-
-    const actualizarDatos = async(unidad)=>{
-
-        try{
+        try {
 
             await actualizarUnidad(
 
@@ -157,28 +137,35 @@ export default function AdministrarUnidades(){
 
             );
 
+            alert("Unidad actualizada correctamente.");
+
             await cargarDatos();
 
             setUnidadEditar(null);
 
             setMostrarFormulario(false);
 
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "No fue posible actualizar la unidad."
+
+            );
 
         }
 
     };
-
 
     const verUnidad = async (id) => {
 
         try {
 
             const unidad = await obtenerUnidad(id);
-
-            console.log(unidad);
 
             setUnidadDetalle(unidad);
 
@@ -190,117 +177,94 @@ export default function AdministrarUnidades(){
 
         }
 
-    }; 
+    };
 
+    const cambiarEstado = async (id, estado) => {
 
+        const confirmar = window.confirm(
 
-    const cambiarEstado = async(id,estado)=>{
+            `¿Está seguro de ${estado === 1 ? "activar" : "desactivar"} esta unidad?`
 
-        try{
+        );
 
-            await cambiarEstadoUnidad(
-                id,
-                estado
-            );
+        if (!confirmar) return;
+
+        try {
+
+            await cambiarEstadoUnidad(id, estado);
+
+            alert("Estado actualizado correctamente.");
 
             await cargarDatos();
 
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "No fue posible actualizar el estado."
+
+            );
 
         }
 
     };
 
-    
-    
-
-
-
-    return(
-
-
-        
+    return (
 
         <div>
 
-            <h1>
-
-                Administrar Unidades
-
-            </h1>
+            <h1>Administrar Unidades</h1>
 
             <input
-                placeholder="Buscar..."
+
+                type="text"
+
+                placeholder="Buscar unidad..."
+
                 value={buscar}
-                onChange={(e)=>setBuscar(e.target.value)}
+
+                onChange={(e) => setBuscar(e.target.value)}
+
             />
 
             {
 
-                mostrarFormulario ?
+                mostrarFormulario && (
 
-                <FormularioUnidad
+                    <FormularioUnidad
 
-                    unidad={unidadEditar}
+                        unidad={unidadEditar}
 
-                    empresas={empresas}
+                        empresas={empresas}
 
-                    sucursales={sucursales}
+                        sucursales={sucursales}
 
-                    combustibles={combustibles}
+                        combustibles={combustibles}
 
-                    onGuardar={
+                        onGuardar={actualizarDatos}
 
-                        unidadEditar
+                        onCancelar={() => {
 
-                        ?
+                            setUnidadEditar(null);
 
-                        actualizarDatos
+                            setMostrarFormulario(false);
 
-                        :
+                        }}
 
-                        guardarUnidad
+                    />
 
-                    }
-
-                    onCancelar={()=>{
-
-                        setUnidadEditar(null);
-
-                        setMostrarFormulario(false);
-
-                    }}
-
-                />
-
-                :
-
-                <button
-
-                    onClick={()=>{
-
-                        setUnidadEditar(null);
-
-                        setMostrarFormulario(true);
-
-                    }}
-
-                >
-
-                    Nueva Unidad
-
-                </button>
+                )
 
             }
-
-            <hr/>
 
             <TablaUnidades
 
                 unidades={unidadesFiltradas}
-            
+
                 onVer={verUnidad}
 
                 onEditar={editarUnidad}
@@ -311,23 +275,25 @@ export default function AdministrarUnidades(){
 
             {
 
-            mostrarDetalle &&
+                mostrarDetalle && (
 
-            <DetalleUnidad
+                    <DetalleUnidad
 
-                unidad={unidadDetalle}
+                        unidad={unidadDetalle}
 
-                onCerrar={()=>{
+                        onCerrar={() => {
 
-                    setMostrarDetalle(false);
+                            setMostrarDetalle(false);
 
-                    setUnidadDetalle(null);
+                            setUnidadDetalle(null);
 
-                }}
+                        }}
 
-            />
+                    />
 
-            }            
+                )
+
+            }
 
         </div>
 

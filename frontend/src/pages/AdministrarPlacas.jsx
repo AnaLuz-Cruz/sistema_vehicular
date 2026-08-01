@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 
 import {
+
     obtenerPlacas,
     obtenerPlaca,
-    crearPlaca,
     actualizarPlaca,
     cambiarEstadoPlaca
+
 } from "../services/placasService";
 
-import { obtenerUnidades } from "../services/unidadesService";
+import {
+
+    obtenerUnidades
+
+} from "../services/unidadesService";
 
 import FormularioPlaca from "../components/placas/FormularioPlaca";
+
 import TablaPlacas from "../components/placas/TablaPlacas";
 
 export default function AdministrarPlacas() {
@@ -59,32 +65,6 @@ export default function AdministrarPlacas() {
 
     }, []);
 
-    const guardarPlaca = async (datos) => {
-
-        try {
-
-            await crearPlaca(datos);
-
-            await cargarDatos();
-
-            setMostrarFormulario(false);
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-
-                error.response?.data?.message ||
-
-                "Error al guardar."
-
-            );
-
-        }
-
-    };
-
     const editarPlaca = async (id) => {
 
         try {
@@ -115,21 +95,39 @@ export default function AdministrarPlacas() {
 
             );
 
+            alert("Placa actualizada correctamente.");
+
             await cargarDatos();
 
-            setPlacaEditar(null);
-
             setMostrarFormulario(false);
+
+            setPlacaEditar(null);
 
         } catch (error) {
 
             console.error(error);
 
+            alert(
+
+                error.response?.data?.message ||
+
+                "No fue posible actualizar la placa."
+
+            );
+
         }
 
     };
 
-    const cambiarEstado = async (id, status) => {
+    const cambiarEstado = async (id, estado) => {
+
+        const confirmar = window.confirm(
+
+            `¿Está seguro de ${estado === 1 ? "activar" : "desactivar"} esta placa?`
+
+        );
+
+        if (!confirmar) return;
 
         try {
 
@@ -137,15 +135,25 @@ export default function AdministrarPlacas() {
 
                 id,
 
-                status
+                estado
 
             );
+
+            alert("Estado actualizado correctamente.");
 
             await cargarDatos();
 
         } catch (error) {
 
             console.error(error);
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "No fue posible actualizar el estado."
+
+            );
 
         }
 
@@ -169,33 +177,23 @@ export default function AdministrarPlacas() {
 
         <div>
 
-            <h1>
-
-                Administrar Placas
-
-            </h1>
+            <h1>Administrar Placas</h1>
 
             <input
 
                 type="text"
 
-                placeholder="Buscar..."
+                placeholder="Buscar placa..."
 
                 value={buscar}
 
-                onChange={(e) =>
-
-                    setBuscar(e.target.value)
-
-                }
+                onChange={(e) => setBuscar(e.target.value)}
 
             />
 
             {
 
-                mostrarFormulario
-
-                    ?
+                mostrarFormulario && (
 
                     <FormularioPlaca
 
@@ -203,19 +201,7 @@ export default function AdministrarPlacas() {
 
                         unidades={unidades}
 
-                        onGuardar={
-
-                            placaEditar
-
-                                ?
-
-                                actualizarDatos
-
-                                :
-
-                                guardarPlaca
-
-                        }
+                        onGuardar={actualizarDatos}
 
                         onCancelar={() => {
 
@@ -227,27 +213,9 @@ export default function AdministrarPlacas() {
 
                     />
 
-                    :
-
-                    <button
-
-                        onClick={() => {
-
-                            setPlacaEditar(null);
-
-                            setMostrarFormulario(true);
-
-                        }}
-
-                    >
-
-                        Nueva Placa
-
-                    </button>
+                )
 
             }
-
-            <hr />
 
             <TablaPlacas
 

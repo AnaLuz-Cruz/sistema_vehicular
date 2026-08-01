@@ -3,6 +3,9 @@ import {
     useLocation
 } from "react-router-dom";
 
+import {
+    useState
+} from "react";
 
 import {
     FaHome,
@@ -14,413 +17,606 @@ import {
     FaList,
     FaGasPump,
     FaMoneyCheckAlt,
-    FaExchangeAlt
+    FaExchangeAlt,
+    FaChevronDown,
+    FaChevronRight,
+    FaPlusCircle,
+    FaEdit,
+    FaIdCard,
+    // FaMapMarkerAlt,
+    FaTruck,
+    FaKey,
+    FaSignOutAlt 
 } from "react-icons/fa";
-
 
 import {
     useAuth
 } from "../context/AuthContext";
 
-
 import "../styles/Sidebar.css";
 
+export default function Sidebar({ abierto }) {
+
+    const [usuariosOpen,setUsuariosOpen] = useState(false);
+    const [empresasOpen,setEmpresasOpen] = useState(false);
+    const [sucursalesOpen,setSucursalesOpen] = useState(false);
+    const [areasOpen,setAreasOpen] = useState(false);
+    const [unidadesOpen,setUnidadesOpen] = useState(false);
+    const [placasOpen,setPlacasOpen] = useState(false);
+    const [asignacionesOpen,setAsignacionesOpen] = useState(false);
+    const [creditosOpen,setCreditosOpen] = useState(false);
+    const [transferenciasOpen,setTransferenciasOpen] = useState(false);
+    const [prestamosOpen,setPrestamosOpen] = useState(false);
+    const [solicitudesOpen,setSolicitudesOpen] = useState(false);
+
+    const { usuario,logout } = useAuth();
+    const rol = usuario?.rol;
+    const location = useLocation();
+
+    const linkActivo = (ruta) => {
+        return location.pathname === ruta ? "active" : "";
+    };
+
+    return (
+        <aside className={abierto ? "sidebar" : "sidebar cerrado"}>
+            <div className="logo">
+                <img 
+                    src="/logo1.png"
+                    alt="Control Vehicular"
+                />
+            </div>
+
+            <div className="perfil">
+                <div className="avatar">
+                    <img 
+                        src="/nino.png"
+                        alt="Usuario"
+                    />
+                </div>
+                <div className="datos">
+                    <strong>
+                        {usuario?.nombre}
+                    </strong>
+                    <br />
+                    <small>
+                        {rol}
+                    </small>
+                </div>
+            </div>
+
+            <nav>
+
+                {/* ================================
+                    SUPERUSUARIO
+                   ================================ */}
+                {rol === "Superusuario" && (
+                <>
+                    {/* Dashboard */}
+
+                    <Link
+                        to="/dashboard"
+                        className={linkActivo("/dashboard")}
+                    >
+                        <FaHome />
+                        <span>Dashboard</span>
+                    </Link>
+
+                    <Link to="/solicitudes/nueva" className={linkActivo("/solicitudes/nueva")}>
+                        <FaClipboardList />
+                        <span>Nueva solicitud</span>
+                    </Link>
+                    <Link to="/mis-solicitudes" className={linkActivo("/mis-solicitudes")}>
+                        <FaList />
+                        <span>Mis solicitudes</span>
+                    </Link>                    
+
+                    {/* Usuarios */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setUsuariosOpen(!usuariosOpen)}
+                    >
+                        <FaUsers />
+                        <span>Gestión de Usuarios</span>
+
+                        {usuariosOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
+
+                    {usuariosOpen && (
+                        <div className="submenu">
+
+                            <Link to="/usuarios/nuevo">
+                                <FaPlusCircle />
+                                <span>Nuevo usuario</span>
+                            </Link>
+
+                            <Link to="/usuarios">
+                                <FaEdit />
+                                <span>Administrar usuarios</span>
+                            </Link>
+
+                        </div>
+                    )}
 
+                    {/* Empresas */}
 
-export default function Sidebar({abierto}){
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setEmpresasOpen(!empresasOpen)}
+                    >
+                        <FaBuilding />
+                        <span>Gestión de Empresas</span>
 
+                        {empresasOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-const {
-    usuario
-}=useAuth();
+                    {empresasOpen && (
+                        <div className="submenu">
 
+                            <Link to="/empresas/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva empresa</span>
+                            </Link>
 
-const rol = usuario?.rol;
+                            <Link to="/empresas">
+                                <FaEdit />
+                                <span>Administrar empresas</span>
+                            </Link>
 
-const location = useLocation();
+                        </div>
+                    )}
 
+                    {/* Sucursales */}
 
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setSucursalesOpen(!sucursalesOpen)}
+                    >
+                        <FaBuilding />
+                        <span>Gestión de Sucursales</span>
 
-const linkActivo=(ruta)=>{
+                        {sucursalesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-    return location.pathname===ruta
-    ?
-    "active"
-    :
-    "";
+                    {sucursalesOpen && (
+                        <div className="submenu">
 
-};
+                            <Link to="/sucursales/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva sucursal</span>
+                            </Link>
 
+                            <Link to="/sucursales">
+                                <FaEdit />
+                                <span>Administrar sucursales</span>
+                            </Link>
 
+                        </div>
+                    )}
 
+                    {/* Áreas */}
 
-return (
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setAreasOpen(!areasOpen)}
+                    >
+                        <FaList />
+                        <span>Gestión de Áreas</span>
 
-<aside
+                        {areasOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-className={
-    abierto
-    ?
-    "sidebar"
-    :
-    "sidebar cerrado"
-}
+                    {areasOpen && (
+                        <div className="submenu">
 
->
 
+                            <Link to="/areas">
+                                <FaEdit />
+                                <span>Administrar áreas</span>
+                            </Link>
 
+                        </div>
+                    )}
 
-<div className="logo">
+                    {/* Unidades */}
 
-    <img 
-        src="/logo1.png"
-        alt="Control Vehicular"
-    />
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setUnidadesOpen(!unidadesOpen)}
+                    >
+                        <FaTruck />
+                        <span>Gestión de Unidades</span>
 
-</div>
+                        {unidadesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
+                    {unidadesOpen && (
+                        <div className="submenu">
 
+                            <Link to="/unidades/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva unidad</span>
+                            </Link>
 
-<div className="perfil">
+                            <Link to="/unidades">
+                                <FaEdit />
+                                <span>Administrar unidades</span>
+                            </Link>
 
+                        </div>
+                    )}
 
-    <div className="avatar">
+                    {/* Placas */}
 
-        <img 
-            src="/nino.png"
-            alt="Usuario"
-        />
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setPlacasOpen(!placasOpen)}
+                    >
+                        <FaIdCard />
+                        <span>Gestión de Placas</span>
 
-    </div>
+                        {placasOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
+                    {placasOpen && (
+                        <div className="submenu">
 
+                            <Link to="/placas/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva placa</span>
+                            </Link>
 
-    <div className="datos">
+                            <Link to="/placas">
+                                <FaEdit />
+                                <span>Administrar placas</span>
+                            </Link>
 
+                        </div>
+                    )}
 
-        <strong>
-            {usuario?.nombre}
-        </strong>
+                    {/* Asignaciones */}
 
-        <br></br>
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setAsignacionesOpen(!asignacionesOpen)}
+                    >
+                        <FaClipboardList />
+                        <span>Gestión de Asignaciones</span>
 
-        <small>
-            {rol}
-        </small>
+                        {asignacionesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
+                    {asignacionesOpen && (
+                        <div className="submenu">
 
-    </div>
+                            <Link to="/asignaciones/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva asignación</span>
+                            </Link>
 
+                            <Link to="/asignaciones">
+                                <FaEdit />
+                                <span>Administrar asignaciones</span>
+                            </Link>
 
-</div>
+                        </div>
+                    )}
 
+                    {/* Créditos */}
 
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setCreditosOpen(!creditosOpen)}
+                    >
+                        <FaCreditCard />
+                        <span>Gestión de Créditos</span>
 
+                        {creditosOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-<nav>
+                    {creditosOpen && (
+                        <div className="submenu">
 
+                            <Link to="/creditos/nuevo">
+                                <FaPlusCircle />
+                                <span>Nuevo crédito</span>
+                            </Link>
 
+                            <Link to="/creditos">
+                                <FaEdit />
+                                <span>Administrar créditos</span>
+                            </Link>
 
-<Link 
-to="/dashboard"
-className={linkActivo("/dashboard")}
->
+                        </div>
+                    )}
 
-<FaHome/>
+                    {/* Transferencias */}
 
-<span>
-Dashboard
-</span>
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setTransferenciasOpen(!transferenciasOpen)}
+                    >
+                        <FaExchangeAlt />
+                        <span>Gestión de Transferencias</span>
 
-</Link>
+                        {transferenciasOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
+                    {transferenciasOpen && (
+                        <div className="submenu">
 
+                            <Link to="/transferencias">
+                                <FaEdit />
+                                <span>Administrar transferencias</span>
+                            </Link>
 
+                        </div>
+                    )}
 
+                    {/* Préstamos */}
 
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setPrestamosOpen(!prestamosOpen)}
+                    >
+                        <FaKey />
+                        <span>Gestión de Préstamos</span>
 
+                        {prestamosOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-{/* ================================
-        SUPERUSUARIO
-     ================================ */}
+                    {prestamosOpen && (
+                        <div className="submenu">
 
+                            <Link to="/prestamos/nuevo">
+                                <FaPlusCircle />
+                                <span>Nuevo préstamo</span>
+                            </Link>
 
-{
-rol==="Superusuario" &&
+                            <Link to="/prestamos">
+                                <FaEdit />
+                                <span>Administrar préstamos</span>
+                            </Link>
 
-<>
+                        </div>
+                    )}
 
+                    {/* Solicitudes */}
 
-<Link to="/usuarios">
-<FaUsers/>
-<span>
-Usuarios
-</span>
-</Link>
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setSolicitudesOpen(!solicitudesOpen)}
+                    >
+                        <FaGasPump />
+                        <span>Gestión de Solicitudes</span>
 
+                        {solicitudesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-<Link to="/empresas">
-<FaBuilding/>
-<span>
-Empresas
-</span>
-</Link>
+                    {solicitudesOpen && (
+                        <div className="submenu">
 
+                            <Link to="/solicitudes/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva solicitud</span>
+                            </Link>
 
+                            <Link to="/solicitudes">
+                                <FaEdit />
+                                <span>Administrar solicitudes</span>
+                            </Link>
 
-<Link to="/sucursales">
-<FaBuilding/>
-<span>
-Sucursales
-</span>
-</Link>
+                        </div>
+                    )}
+                    
+
+                </>
+                )}
+
+                {/* ================================
+                    ADMINISTRADOR
+                   ================================ */}
+                {rol === "Administrador" && (
+                    <>
 
+                    {/* Unidades */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setUnidadesOpen(!unidadesOpen)}
+                    >
+                        <FaTruck />
+                        <span>Gestión de Unidades</span>
 
+                        {unidadesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
 
-<Link to="/areas">
-<FaList/>
-<span>
-Áreas
-</span>
-</Link>
+                    {unidadesOpen && (
+                        <div className="submenu">
 
+                            <Link to="/unidades/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva unidad</span>
+                            </Link>
+
+                            <Link to="/unidades">
+                                <FaEdit />
+                                <span>Administrar unidades</span>
+                            </Link>
 
+                        </div>
+                    )}
+
+                    {/* Placas */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setPlacasOpen(!placasOpen)}
+                    >
+                        <FaIdCard />
+                        <span>Gestión de Placas</span>
 
-<Link to="/unidades">
-<FaCar/>
-<span>
-Unidades
-</span>
-</Link>
-
-
-
-<Link to="/asignaciones">
-<FaList/>
-<span>
-Asignaciones
-</span>
-</Link>
-
-
-
-<Link to="/placas">
-<FaCar/>
-<span>
-Placas
-</span>
-</Link>
-
-
-
-<Link to="/creditos">
-<FaCreditCard/>
-<span>
-Créditos
-</span>
-</Link>
-
-
-
-<Link to="/transferencias">
-<FaExchangeAlt/>
-<span>
-Transferencias
-</span>
-</Link>
-
-
-
-<Link to="/prestamos">
-<FaCar/>
-<span>
-Préstamos
-</span>
-</Link>
-
-
-
-<Link to="/solicitudes">
-<FaClipboardList/>
-<span>
-Solicitudes
-</span>
-</Link>
-
-
-</>
-
-}
-
-
-
-
-
-
-
-
-
-{/* ================================
-        ADMINISTRADOR
-     ================================ */}
-
-
-
-{
-rol==="Administrador" &&
-
-<>
-
-<Link to="/unidades">
-<FaCar/>
-<span>
-Unidades
-</span>
-</Link>
-
-
-
-<Link to="/asignaciones">
-<FaList/>
-<span>
-Asignaciones
-</span>
-</Link>
-
-
-
-<Link to="/placas">
-<FaCar/>
-<span>
-Placas
-</span>
-</Link>
-
-
-
-<Link to="/prestamos">
-<FaCar/>
-<span>
-Préstamos
-</span>
-</Link>
-
-
-</>
-
-}
-
-
-
-
-
-
-
-
-
-{/* ================================
-        CONTABILIDAD
-     ================================ */}
-
-
-{
-rol==="Contabilidad" &&
-
-<>
-
-<Link to="/solicitudes">
-<FaClipboardList/>
-<span>
-Solicitudes
-</span>
-</Link>
-
-
-
-<Link to="/creditos">
-<FaCreditCard/>
-<span>
-Créditos
-</span>
-</Link>
-
-
-
-<Link to="/transferencias">
-<FaMoneyCheckAlt/>
-<span>
-Transferencias
-</span>
-</Link>
-
-
-
-<Link to="/tickets">
-<FaGasPump/>
-<span>
-Tickets
-</span>
-</Link>
-
-
-</>
-
-}
-
-
-
-
-
-
-
-
-
-{/* ================================
-        CONDUCTOR
-     ================================ */}
-
-
-{
-rol==="Conductor" &&
-
-<>
-
-<Link to="/solicitudes/nueva">
-
-<FaClipboardList/>
-
-<span>
-Nueva solicitud
-</span>
-
-</Link>
-
-
-
-
-<Link to="/mis-solicitudes">
-
-<FaList/>
-
-<span>
-Mis solicitudes
-</span>
-
-</Link>
-
-
-</>
-
-}
-
-
-
-</nav>
-
-
-</aside>
-
-
-);
-
+                        {placasOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
+
+                    {placasOpen && (
+                        <div className="submenu">
+
+                            <Link to="/placas/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva placa</span>
+                            </Link>
+
+                            <Link to="/placas">
+                                <FaEdit />
+                                <span>Administrar placas</span>
+                            </Link>
+
+                        </div>
+                    )}
+
+                    {/* Asignaciones */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setAsignacionesOpen(!asignacionesOpen)}
+                    >
+                        <FaClipboardList />
+                        <span>Gestión de Asignaciones</span>
+
+                        {asignacionesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
+
+                    {asignacionesOpen && (
+                        <div className="submenu">
+
+                            <Link to="/asignaciones/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva asignación</span>
+                            </Link>
+
+                            <Link to="/asignaciones">
+                                <FaEdit />
+                                <span>Administrar asignaciones</span>
+                            </Link>
+
+                        </div>
+                    )}
+                    {/* Préstamos */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setPrestamosOpen(!prestamosOpen)}
+                    >
+                        <FaKey />
+                        <span>Gestión de Préstamos</span>
+
+                        {prestamosOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
+
+                    {prestamosOpen && (
+                        <div className="submenu">
+
+                            <Link to="/prestamos/nuevo">
+                                <FaPlusCircle />
+                                <span>Nuevo préstamo</span>
+                            </Link>
+
+                            <Link to="/prestamos">
+                                <FaEdit />
+                                <span>Administrar préstamos</span>
+                            </Link>
+
+                        </div>
+                    )}
+
+                    </>
+                )}
+
+                {/* ================================
+                    CONTABILIDAD
+                   ================================ */}
+                {rol === "Contabilidad" && (
+                    <>
+
+                    {/* Solicitudes */}
+
+                    <div
+                        className="submenu-toggle"
+                        onClick={() => setSolicitudesOpen(!solicitudesOpen)}
+                    >
+                        <FaGasPump />
+                        <span>Gestión de Solicitudes</span>
+
+                        {solicitudesOpen ? <FaChevronDown /> : <FaChevronRight />}
+                    </div>
+
+                    {solicitudesOpen && (
+                        <div className="submenu">
+
+                            <Link to="/solicitudes/nueva">
+                                <FaPlusCircle />
+                                <span>Nueva solicitud</span>
+                            </Link>
+
+                            <Link to="/solicitudes">
+                                <FaEdit />
+                                <span>Administrar solicitudes</span>
+                            </Link>
+
+                        </div>
+                    )}
+
+                        <Link to="/creditos" className={linkActivo("/creditos")}>
+                            <FaCreditCard />
+                            <span>Créditos</span>
+                        </Link>
+                        <Link to="/transferencias" className={linkActivo("/transferencias")}>
+                            <FaMoneyCheckAlt />
+                            <span>Transferencias</span>
+                        </Link>
+                        <Link to="/tickets" className={linkActivo("/tickets")}>
+                            <FaGasPump />
+                            <span>Tickets</span>
+                        </Link>
+
+                        <Link to="/solicitudes/nueva" className={linkActivo("/solicitudes/nueva")}>
+                            <FaClipboardList />
+                            <span>Nueva solicitud</span>
+                        </Link>
+                        <Link to="/mis-solicitudes" className={linkActivo("/mis-solicitudes")}>
+                            <FaList />
+                            <span>Mis solicitudes</span>
+                        </Link>
+
+
+                    </>
+                )}
+
+                {/* ================================
+                    CONDUCTOR
+                   ================================ */}
+                {rol === "Conductor" && (
+                    <>
+                        <Link to="/solicitudes/nueva" className={linkActivo("/solicitudes/nueva")}>
+                            <FaClipboardList />
+                            <span>Nueva solicitud</span>
+                        </Link>
+                        <Link to="/mis-solicitudes" className={linkActivo("/mis-solicitudes")}>
+                            <FaList />
+                            <span>Mis solicitudes</span>
+                        </Link>
+                    </>
+                )}
+            </nav>
+
+            <div
+                className="logout"
+                onClick={logout}
+            >
+                <FaSignOutAlt />
+                <span>Cerrar sesión</span>
+            </div>            
+        </aside>
+    );
 }

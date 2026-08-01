@@ -1,3 +1,5 @@
+import "../../styles/Tabla.css";
+
 export default function TablaPrestamos({
 
     prestamos,
@@ -24,305 +26,268 @@ export default function TablaPrestamos({
     }
 
 
-
     return (
 
-        <table>
+        <div className="tabla-container">
 
-            <thead>
+            <table className="tabla-usuarios">
 
-                <tr>
+                <thead>
 
-                    <th>Usuario</th>
+                    <tr>
 
-                    <th>Unidad</th>
+                        <th>Usuario</th>
+                        <th>Unidad</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
 
-                    <th>Marca</th>
+                    </tr>
 
-                    <th>Modelo</th>
+                </thead>
 
-                    <th>Fecha inicio</th>
 
-                    <th>Fecha fin</th>
+                <tbody>
 
-                    <th>Estado</th>
+                    {
 
-                    <th>Acciones</th>
+                        prestamos.map((prestamo) => {
 
-                </tr>
+                            let badgeClass = "badge badge-inactivo";
 
-            </thead>
+                            switch (prestamo.estado) {
 
+                                case "aprobado":
+                                case "entregado":
+                                case "devuelto":
+                                    badgeClass = "badge badge-activo";
+                                    break;
 
+                                case "cancelado":
+                                default:
+                                    badgeClass = "badge badge-inactivo";
+                                    break;
 
-            <tbody>
+                            }
 
-                {
+                            return (
 
-                    prestamos.map((prestamo)=>(
+                                <tr key={prestamo.id_historial}>
 
+                                    <td>
 
-                        <tr
+                                        {prestamo.usuario}
 
-                            key={prestamo.id_historial}
+                                    </td>
 
-                        >
+                                    <td>
 
+                                        {prestamo.cve}
 
-                            <td>
+                                    </td>
 
-                                {prestamo.usuario}
+                                    <td>
 
-                            </td>
+                                        {prestamo.marca}
 
+                                    </td>
 
+                                    <td>
 
-                            <td>
+                                        {prestamo.modelo}
 
-                                {prestamo.cve}
+                                    </td>
 
-                            </td>
+                                    <td>
 
+                                        {
 
+                                            prestamo.fecha_inicio
 
-                            <td>
+                                                ?
 
-                                {prestamo.marca}
+                                                prestamo.fecha_inicio.substring(0, 10)
 
-                            </td>
+                                                :
 
-
-
-                            <td>
-
-                                {prestamo.modelo}
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-
-                                    prestamo.fecha_inicio
-
-                                    ?
-
-                                    prestamo.fecha_inicio.substring(0,10)
-
-                                    :
-
-                                    "-"
-
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-
-                                    prestamo.fecha_fin
-
-                                    ?
-
-                                    prestamo.fecha_fin.substring(0,10)
-
-                                    :
-
-                                    "-"
-
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-
-                                    prestamo.estado
-
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-
-                                <button
-
-                                    onClick={()=>
-
-
-                                        onEditar(
-
-                                            prestamo.id_historial
-
-                                        )
-
-
-                                    }
-
-                                >
-
-                                    Editar
-
-                                </button>
-
-
-
-
-                                {
-
-                                    prestamo.estado !== "aprobado"
-
-                                    &&
-
-                                    <button
-
-                                        onClick={()=>
-
-
-                                            onEstado(
-
-                                                prestamo.id_historial,
-
-                                                "aprobado"
-
-                                            )
-
+                                                "-"
 
                                         }
 
-                                    >
+                                    </td>
 
-                                        Aprobar
+                                    <td>
 
-                                    </button>
+                                        {
 
-                                }
+                                            prestamo.fecha_fin
 
+                                                ?
 
+                                                prestamo.fecha_fin.substring(0, 10)
 
+                                                :
 
-                                {
-
-                                    prestamo.estado !== "entregado"
-
-                                    &&
-
-                                    <button
-
-                                        onClick={()=>
-
-
-                                            onEstado(
-
-                                                prestamo.id_historial,
-
-                                                "entregado"
-
-                                            )
-
+                                                "-"
 
                                         }
 
-                                    >
+                                    </td>
 
-                                        Entregar
+                                    <td>
 
-                                    </button>
+                                        <span className={badgeClass}>
 
-                                }
+                                            {prestamo.estado}
 
+                                        </span>
 
+                                    </td>
 
+                                    <td>
 
-                                {
+                                        <div className="acciones-cell">
 
-                                    prestamo.estado !== "devuelto"
+                                            <button
 
-                                    &&
+                                                className="btn-accion btn-editar"
 
-                                    <button
+                                                onClick={() =>
+                                                    onEditar(
+                                                        prestamo.id_historial
+                                                    )
+                                                }
 
-                                        onClick={()=>
+                                            >
 
+                                                Editar
 
-                                            onEstado(
-
-                                                prestamo.id_historial,
-
-                                                "devuelto"
-
-                                            )
-
-
-                                        }
-
-                                    >
-
-                                        Devolver
-
-                                    </button>
-
-                                }
+                                            </button>
 
 
+                                            {
+
+                                                prestamo.estado !== "aprobado" && (
+
+                                                    <button
+
+                                                        className="btn-accion btn-estado-activar"
+
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                prestamo.id_historial,
+                                                                "aprobado"
+                                                            )
+                                                        }
+
+                                                    >
+
+                                                        Aprobar
+
+                                                    </button>
+
+                                                )
+
+                                            }
 
 
-                                {
+                                            {
 
-                                    prestamo.estado !== "cancelado"
+                                                prestamo.estado !== "entregado" && (
 
-                                    &&
+                                                    <button
 
-                                    <button
+                                                        className="btn-accion btn-estado-activar"
 
-                                        onClick={()=>
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                prestamo.id_historial,
+                                                                "entregado"
+                                                            )
+                                                        }
 
+                                                    >
 
-                                            onEstado(
+                                                        Entregar
 
-                                                prestamo.id_historial,
+                                                    </button>
 
-                                                "cancelado"
+                                                )
 
-                                            )
-
-
-                                        }
-
-                                    >
-
-                                        Cancelar
-
-                                    </button>
-
-                                }
+                                            }
 
 
-                            </td>
+                                            {
+
+                                                prestamo.estado !== "devuelto" && (
+
+                                                    <button
+
+                                                        className="btn-accion btn-estado-activar"
+
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                prestamo.id_historial,
+                                                                "devuelto"
+                                                            )
+                                                        }
+
+                                                    >
+
+                                                        Devolver
+
+                                                    </button>
+
+                                                )
+
+                                            }
 
 
-                        </tr>
+                                            {
 
+                                                prestamo.estado !== "cancelado" && (
 
-                    ))
+                                                    <button
 
-                }
+                                                        className="btn-accion btn-estado-desactivar"
 
-            </tbody>
+                                                        onClick={() =>
+                                                            onEstado(
+                                                                prestamo.id_historial,
+                                                                "cancelado"
+                                                            )
+                                                        }
 
+                                                    >
 
-        </table>
+                                                        Cancelar
+
+                                                    </button>
+
+                                                )
+
+                                            }
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            );
+
+                        })
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     );
 

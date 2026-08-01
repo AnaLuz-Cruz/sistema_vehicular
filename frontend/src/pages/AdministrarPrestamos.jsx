@@ -3,20 +3,22 @@ import { useEffect, useState } from "react";
 import {
     obtenerPrestamos,
     obtenerPrestamo,
-    crearPrestamo,
     actualizarPrestamo,
     cambiarEstadoPrestamo
 } from "../services/prestamosService";
 
-import { obtenerUsuarios } from "../services/usuariosService";
-import { obtenerUnidades } from "../services/unidadesService";
+import {
+    obtenerUsuarios
+} from "../services/usuariosService";
+
+import {
+    obtenerUnidades
+} from "../services/unidadesService";
 
 import FormularioPrestamo from "../components/prestamos/FormularioPrestamo";
 import TablaPrestamos from "../components/prestamos/TablaPrestamos";
 
-
 export default function AdministrarPrestamos() {
-
 
     const [prestamos, setPrestamos] = useState([]);
 
@@ -24,20 +26,15 @@ export default function AdministrarPrestamos() {
 
     const [unidades, setUnidades] = useState([]);
 
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
     const [prestamoEditar, setPrestamoEditar] = useState(null);
 
     const [buscar, setBuscar] = useState("");
 
 
 
-
-
     const cargarDatos = async () => {
 
         try {
-
 
             const [
 
@@ -49,17 +46,13 @@ export default function AdministrarPrestamos() {
 
             ] = await Promise.all([
 
-
                 obtenerPrestamos(),
 
                 obtenerUsuarios(),
 
                 obtenerUnidades()
 
-
             ]);
-
-
 
             setPrestamos(prestamosData);
 
@@ -67,13 +60,9 @@ export default function AdministrarPrestamos() {
 
             setUnidades(unidadesData);
 
-
-
-        } catch(error) {
-
+        } catch (error) {
 
             console.error(error);
-
 
         }
 
@@ -81,107 +70,39 @@ export default function AdministrarPrestamos() {
 
 
 
-
-
-
     useEffect(() => {
 
-
         cargarDatos();
-
 
     }, []);
 
 
 
 
+    const editarPrestamo = async (id) => {
 
-
-
-    const guardarPrestamo = async(datos)=>{
-
-
-        try{
-
-
-            await crearPrestamo(datos);
-
-
-            await cargarDatos();
-
-
-            setMostrarFormulario(false);
-
-
-
-        }catch(error){
-
-
-            console.error(error);
-
-
-
-            alert(
-
-                error.response?.data?.message ||
-
-                "Error al guardar préstamo"
-
-            );
-
-
-        }
-
-
-    };
-
-
-
-
-
-
-
-    const editarPrestamo = async(id)=>{
-
-
-        try{
-
+        try {
 
             const prestamo =
 
                 await obtenerPrestamo(id);
 
-
-
             setPrestamoEditar(prestamo);
 
-
-            setMostrarFormulario(true);
-
-
-
-        }catch(error){
-
+        } catch (error) {
 
             console.error(error);
 
-
         }
-
 
     };
 
 
 
 
+    const actualizarDatos = async (datos) => {
 
-
-
-    const actualizarDatos = async(datos)=>{
-
-
-        try{
-
+        try {
 
             await actualizarPrestamo(
 
@@ -191,42 +112,56 @@ export default function AdministrarPrestamos() {
 
             );
 
-
+            alert("Préstamo actualizado correctamente.");
 
             await cargarDatos();
 
-
-
             setPrestamoEditar(null);
 
-
-            setMostrarFormulario(false);
-
-
-
-        }catch(error){
-
+        } catch (error) {
 
             console.error(error);
 
+            alert(
+
+                error.response?.data?.message ||
+
+                "Error al actualizar."
+
+            );
 
         }
-
 
     };
 
 
 
 
+    const cambiarEstado = async (
 
+        id,
 
+        estado
 
+    ) => {
 
-    const cambiarEstado = async(id,estado)=>{
+        const confirmar = window.confirm(
 
+            `¿Desea ${
 
-        try{
+                estado === 1
 
+                    ? "activar"
+
+                    : "desactivar"
+
+            } este préstamo?`
+
+        );
+
+        if (!confirmar) return;
+
+        try {
 
             await cambiarEstadoPrestamo(
 
@@ -236,84 +171,53 @@ export default function AdministrarPrestamos() {
 
             );
 
-
-
             await cargarDatos();
 
-
-
-        }catch(error){
-
+        } catch (error) {
 
             console.error(error);
 
-
         }
-
 
     };
 
 
 
+    const prestamosFiltrados = prestamos.filter(
 
+        (prestamo) =>
 
+            prestamo.usuario
 
+                ?.toLowerCase()
 
+                .includes(buscar.toLowerCase())
 
-    const prestamosFiltrados = prestamos.filter((prestamo)=>
+            ||
 
+            prestamo.cve
 
-        prestamo.usuario
+                ?.toLowerCase()
 
-        ?.toLowerCase()
+                .includes(buscar.toLowerCase())
 
-        .includes(
+            ||
 
-            buscar.toLowerCase()
+            prestamo.marca
 
-        )
+                ?.toLowerCase()
 
-        ||
+                .includes(buscar.toLowerCase())
 
-        prestamo.cve
+            ||
 
-        ?.toLowerCase()
+            prestamo.estado
 
-        .includes(
+                ?.toLowerCase()
 
-            buscar.toLowerCase()
-
-        )
-
-        ||
-
-        prestamo.marca
-
-        ?.toLowerCase()
-
-        .includes(
-
-            buscar.toLowerCase()
-
-        )
-
-        ||
-
-        prestamo.estado
-
-        ?.toLowerCase()
-
-        .includes(
-
-            buscar.toLowerCase()
-
-        )
-
+                .includes(buscar.toLowerCase())
 
     );
-
-
-
 
 
 
@@ -321,16 +225,11 @@ export default function AdministrarPrestamos() {
 
         <div>
 
-
             <h1>
 
                 Administrar Préstamos
 
             </h1>
-
-
-
-
 
             <input
 
@@ -340,7 +239,7 @@ export default function AdministrarPrestamos() {
 
                 value={buscar}
 
-                onChange={(e)=>
+                onChange={(e) =>
 
                     setBuscar(e.target.value)
 
@@ -348,94 +247,7 @@ export default function AdministrarPrestamos() {
 
             />
 
-
-
-
-
-
-            {
-
-                mostrarFormulario
-
-
-                ?
-
-
-                <FormularioPrestamo
-
-                    prestamo={prestamoEditar}
-
-                    usuarios={usuarios}
-
-                    unidades={unidades}
-
-
-                    onGuardar={
-
-                        prestamoEditar
-
-                        ?
-
-                        actualizarDatos
-
-                        :
-
-                        guardarPrestamo
-
-                    }
-
-
-                    onCancelar={()=>{
-
-
-                        setMostrarFormulario(false);
-
-
-                        setPrestamoEditar(null);
-
-
-                    }}
-
-
-                />
-
-
-
-                :
-
-
-                <button
-
-                    onClick={()=>{
-
-
-                        setPrestamoEditar(null);
-
-
-                        setMostrarFormulario(true);
-
-
-                    }}
-
-                >
-
-                    Nuevo Préstamo
-
-                </button>
-
-
-            }
-
-
-
-
-
             <hr />
-
-
-
-
-
 
             <TablaPrestamos
 
@@ -447,7 +259,29 @@ export default function AdministrarPrestamos() {
 
             />
 
+            {
 
+                prestamoEditar &&
+
+                <FormularioPrestamo
+
+                    prestamo={prestamoEditar}
+
+                    usuarios={usuarios}
+
+                    unidades={unidades}
+
+                    onGuardar={actualizarDatos}
+
+                    onCancelar={() =>
+
+                        setPrestamoEditar(null)
+
+                    }
+
+                />
+
+            }
 
         </div>
 

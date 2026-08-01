@@ -3,195 +3,92 @@ import {
     useState
 } from "react";
 
-
 import {
+
     obtenerSucursales,
     obtenerSucursal,
-    crearSucursal,
     actualizarSucursal,
     cambiarEstadoSucursal
+
 } from "../services/sucursalesService";
 
-
 import {
-    obtenerEmpresas
-} from "../services/empresasService";
 
+    obtenerEmpresas
+
+} from "../services/empresasService";
 
 import TablaSucursales
 from "../components/sucursales/TablaSucursales";
 
-
 import FormularioSucursal
 from "../components/sucursales/FormularioSucursal";
 
+export default function AdministrarSucursales() {
 
+    const [sucursales, setSucursales] = useState([]);
 
-export default function AdministrarSucursales(){
+    const [empresas, setEmpresas] = useState([]);
 
+    const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
-    const [
-        sucursales,
-        setSucursales
-    ] = useState([]);
+    const [sucursalEditar, setSucursalEditar] = useState(null);
 
+    const cargarDatos = async () => {
 
-
-    const [
-        empresas,
-        setEmpresas
-    ] = useState([]);
-
-
-
-    const [
-        mostrarFormulario,
-        setMostrarFormulario
-    ] = useState(false);
-
-
-
-    const [
-        sucursalEditar,
-        setSucursalEditar
-    ] = useState(null);
-
-
-
-
-    const cargarDatos = async()=>{
-
-
-        try{
-
+        try {
 
             const [
+
                 sucursalesData,
                 empresasData
 
             ] = await Promise.all([
 
-
                 obtenerSucursales(),
-
                 obtenerEmpresas()
-
 
             ]);
 
+            setSucursales(sucursalesData);
 
+            setEmpresas(empresasData);
 
-            setSucursales(
-                sucursalesData
-            );
-
-
-            setEmpresas(
-                empresasData
-            );
-
-
-
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
 
         }
 
-
     };
 
-
-
-
-
-    useEffect(()=>{
-
+    useEffect(() => {
 
         cargarDatos();
 
+    }, []);
 
-    },[]);
+    const editarSucursal = async (id) => {
 
+        try {
 
+            const sucursal = await obtenerSucursal(id);
 
+            setSucursalEditar(sucursal);
 
+            setMostrarFormulario(true);
 
-
-    const guardarSucursal = async(sucursal)=>{
-
-
-        try{
-
-
-            await crearSucursal(
-                sucursal
-            );
-
-
-            await cargarDatos();
-
-
-            setMostrarFormulario(false);
-
-
-
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
 
         }
 
-
     };
 
+    const actualizarDatosSucursal = async (sucursal) => {
 
-
-
-
-
-
-    const editarSucursal = async(id)=>{
-
-
-        try{
-
-
-            const sucursal =
-                await obtenerSucursal(id);
-
-
-
-            setSucursalEditar(
-                sucursal
-            );
-
-
-            setMostrarFormulario(
-                true
-            );
-
-
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-
-    };
-
-
-
-
-
-
-    const actualizarDatosSucursal = async(sucursal)=>{
-
-
-        try{
-
+        try {
 
             await actualizarSucursal(
 
@@ -201,141 +98,95 @@ export default function AdministrarSucursales(){
 
             );
 
-
+            alert("Sucursal actualizada correctamente.");
 
             await cargarDatos();
 
-
-
             setSucursalEditar(null);
-
 
             setMostrarFormulario(false);
 
-
-
-        }catch(error){
+        } catch (error) {
 
             console.error(error);
 
-        }
+            alert(
 
+                error.response?.data?.message ||
 
-    };
+                "No fue posible actualizar la sucursal."
 
-
-
-
-
-
-
-    const cambiarEstado = async(
-        id,
-        estado
-    )=>{
-
-
-        try{
-
-
-            await cambiarEstadoSucursal(
-                id,
-                estado
             );
 
-
-            cargarDatos();
-
-
-
-        }catch(error){
-
-            console.error(error);
-
         }
-
 
     };
 
+    const cambiarEstado = async (id, estado) => {
 
+        try {
 
+            const confirmar = window.confirm(
 
+                `¿Está seguro de ${estado === 1 ? "activar" : "desactivar"} esta sucursal?`
 
+            );
 
-    return(
+            if (!confirmar) return;
+
+            await cambiarEstadoSucursal(id, estado);
+
+            alert("Estado actualizado correctamente.");
+
+            await cargarDatos();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+
+                error.response?.data?.message ||
+
+                "No fue posible actualizar el estado."
+
+            );
+
+        }
+
+    };
+
+    return (
 
         <div>
 
-
-            <h1>
-                Administrar Sucursales
-            </h1>
-
-
-
+            <h1>Administrar Sucursales</h1>
 
             {
 
-                mostrarFormulario
+                mostrarFormulario && (
 
-                ?
+                    <FormularioSucursal
 
-                <FormularioSucursal
+                        sucursal={sucursalEditar}
 
-                    sucursal={sucursalEditar}
+                        empresas={empresas}
 
-                    empresas={empresas}
+                        onGuardar={actualizarDatosSucursal}
 
+                        onCancelar={() => {
 
-                    onGuardar={
-                        sucursalEditar
-                        ?
-                        actualizarDatosSucursal
-                        :
-                        guardarSucursal
-                    }
+                            setSucursalEditar(null);
 
+                            setMostrarFormulario(false);
 
-                    onCancelar={()=>{
+                        }}
 
-                        setSucursalEditar(null);
+                    />
 
-                        setMostrarFormulario(false);
-
-                    }}
-
-
-                />
-
-
-                :
-
-
-                <button
-
-                    onClick={()=>{
-
-                        setSucursalEditar(null);
-
-                        setMostrarFormulario(true);
-
-                    }}
-
-                >
-
-                    Nueva Sucursal
-
-                </button>
+                )
 
             }
-
-
-
-
-            <hr/>
-
-
-
 
             <TablaSucursales
 
@@ -347,10 +198,7 @@ export default function AdministrarSucursales(){
 
             />
 
-
-
         </div>
-
 
     );
 

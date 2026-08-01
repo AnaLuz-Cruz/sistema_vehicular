@@ -1,3 +1,6 @@
+import "../../styles/Tabla.css";
+
+
 export default function TablaUnidades({
 
     unidades,
@@ -13,285 +16,294 @@ export default function TablaUnidades({
 
     return (
 
-        <table border="1">
+        <div className="tabla-container">
 
-            <thead>
 
-                <tr>
+            <table className="tabla-usuarios">
 
-                    <th>CVE</th>
 
-                    <th>Marca</th>
+                <thead>
 
-                    <th>Clase</th>
+                    <tr>
 
-                    <th>Tipo</th>
+                        <th>CVE</th>
+                        <th>Marca</th>
+                        <th>Clase</th>
+                        <th>Tipo</th>
+                        <th>Modelo</th>
+                        <th>Placas</th>
+                        <th>Km Actual</th>
+                        <th>Km/L</th>
+                        <th>Capacidad</th>
+                        <th>Foto</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
 
-                    <th>Modelo</th>
+                    </tr>
 
-                    <th>Placas</th>
 
-                    <th>Km Actual</th>
+                </thead>
 
-                    <th>Km/L</th>
 
-                    <th>Capacidad</th>
 
-                    <th>Foto</th>
+                <tbody>
 
-                    <th>Estado</th>
 
-                    <th>Acciones</th>
+                    {
 
+                        unidades.map((unidad) => {
 
-                </tr>
 
+                            const activa = Number(unidad.estado) === 1;
 
-            </thead>
 
+                            return (
 
 
-            <tbody>
+                                <tr key={unidad.id_unidad}>
 
 
-                {
+                                    <td>
+                                        {unidad.cve}
+                                    </td>
 
-                    unidades.map((unidad)=>(
 
+                                    <td>
+                                        {unidad.marca}
+                                    </td>
 
-                        <tr key={unidad.id_unidad}>
 
+                                    <td>
+                                        {unidad.clase}
+                                    </td>
 
-                            <td>
 
-                                {unidad.cve}
+                                    <td>
+                                        {unidad.tipo}
+                                    </td>
 
-                            </td>
 
+                                    <td>
+                                        {unidad.modelo}
+                                    </td>
 
-                            <td>
 
-                                {unidad.marca}
+                                    <td>
 
-                            </td>
+                                        {
+                                            unidad.placas || "Sin placa"
+                                        }
 
+                                    </td>
 
-                            <td>
 
-                                {unidad.clase}
 
-                            </td>
+                                    <td>
+                                        {unidad.kilometraje_actual}
+                                    </td>
 
 
-                            <td>
 
-                                {unidad.tipo}
+                                    <td>
 
-                            </td>
+                                        {
+                                            unidad.kilometraje_por_litro || "-"
+                                        }
 
+                                    </td>
 
-                            <td>
 
-                                {unidad.modelo}
 
-                            </td>
+                                    <td>
 
+                                        {
+                                            unidad.capacidad_tanque
+                                        }
+                                        L
 
-                            <td>
+                                    </td>
 
-                                {
-                                    unidad.placas
-                                    ||
-                                    "Sin placa"
-                                }
 
-                            </td>
 
+                                    <td>
 
 
-                            <td>
+                                        {
 
-                                {
-                                    unidad.kilometraje_actual
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-                                    unidad.kilometraje_por_litro
-                                    ||
-                                    "-"
-                                }
-
-                            </td>
-
-
-
-                            <td>
-
-                                {
-                                    unidad.capacidad_tanque
-                                }
-                                L
-
-                            </td>
-
-
-
-                            <td>
-
-
-                                {
-
-                                    unidad.foto
-
-                                    ?
-
-                                    <img
-
-                                        src={unidad.foto_url}
-
-                                        width="70"
-
-                                        alt="unidad"
-
-                                    />
-
-                                    :
-
-                                    "Sin foto"
-
-                                }
-
-
-                            </td>
-
-
-
-                            <td>
-
-
-                                {
-
-                                    Number(unidad.estado) === 1
-
-                                    ?
-
-                                    "Activa"
-
-                                    :
-
-                                    "Inactiva"
-
-
-                                }
-
-
-                            </td>
-
-
-
-                            <td>
-
-
-                                <button
-                                    onClick={()=> onVer( unidad.id_unidad )}
-
-                                >
-                                    Ver más
-                                </button>
-
-
-
-                                <button
-
-                                    onClick={()=>
-
-
-                                        onEditar(
-
-                                            unidad.id_unidad
-
-                                        )
-
-
-                                    }
-
-                                >
-
-                                    Editar
-
-                                </button>
-
-
-
-                                <button
-
-                                    onClick={()=>
-
-
-                                        onEstado(
-
-                                            unidad.id_unidad,
-
-                                            Number(unidad.estado) === 1
+                                            unidad.foto
 
                                             ?
 
-                                            0
+                                            <img
+
+                                                src={unidad.foto_url}
+
+                                                width="70"
+
+                                                alt="unidad"
+
+                                            />
 
                                             :
 
-                                            1
+                                            "Sin foto"
 
-                                        )
-
-
-                                    }
-
-                                >
+                                        }
 
 
-                                    {
-
-                                        Number(unidad.estado) === 1
-
-                                        ?
-
-                                        "Desactivar"
-
-                                        :
-
-                                        "Activar"
-
-
-                                    }
-
-
-                                </button>
+                                    </td>
 
 
 
-                            </td>
+                                    <td>
 
 
-                        </tr>
+                                        <span
+
+                                            className={
+                                                activa
+                                                ? "badge badge-activo"
+                                                : "badge badge-inactivo"
+                                            }
+
+                                        >
+
+                                            {
+                                                activa
+                                                ? "Activa"
+                                                : "Inactiva"
+                                            }
 
 
-                    ))
-
-                }
+                                        </span>
 
 
-            </tbody>
+                                    </td>
 
 
-        </table>
 
+                                    <td>
+
+
+                                        <div className="acciones-cell">
+
+
+
+                                            <button
+
+                                                className="btn-accion btn-editar"
+
+                                                onClick={() =>
+                                                    onVer(
+                                                        unidad.id_unidad
+                                                    )
+                                                }
+
+                                            >
+
+                                                Ver más
+
+                                            </button>
+
+
+
+
+                                            <button
+
+                                                className="btn-accion btn-editar"
+
+                                                onClick={() =>
+                                                    onEditar(
+                                                        unidad.id_unidad
+                                                    )
+                                                }
+
+                                            >
+
+                                                Editar
+
+                                            </button>
+
+
+
+
+
+                                            <button
+
+                                                className={
+
+                                                    activa
+
+                                                    ?
+
+                                                    "btn-accion btn-estado-desactivar"
+
+                                                    :
+
+                                                    "btn-accion btn-estado-activar"
+
+                                                }
+
+
+                                                onClick={() =>
+
+                                                    onEstado(
+
+                                                        unidad.id_unidad,
+
+                                                        activa ? 0 : 1
+
+                                                    )
+
+                                                }
+
+
+                                            >
+
+                                                {
+
+                                                    activa
+
+                                                    ?
+
+                                                    "Desactivar"
+
+                                                    :
+
+                                                    "Activar"
+
+                                                }
+
+
+                                            </button>
+
+
+
+                                        </div>
+
+
+                                    </td>
+
+
+
+                                </tr>
+
+
+                            );
+
+
+                        })
+
+                    }
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
 
     );
 

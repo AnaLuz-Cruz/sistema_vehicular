@@ -1,3 +1,6 @@
+import "../../styles/Tabla.css"; // cambia la ruta si tu archivo tiene otro nombre
+
+
 export default function TablaEmpresas({
 
     empresas,
@@ -8,121 +11,170 @@ export default function TablaEmpresas({
 
 }) {
 
+
     return (
 
-        <table border="1">
+        <div className="tabla-container">
 
-            <thead>
+            <table className="tabla-usuarios">
 
-                <tr>
+                <thead>
 
-                    <th>ID</th>
-                    <th>Razón Social</th>
-                    <th>RFC</th>
-                    <th>Nombre Comercial</th>
-                    <th>Régimen Fiscal</th>
-                    <th>Actividad Económica</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
+                    <tr>
 
-                </tr>
+                        <th>ID</th>
+                        <th>Razón Social</th>
+                        <th>RFC</th>
+                        <th>Nombre Comercial</th>
+                        <th>Régimen Fiscal</th>
+                        <th>Actividad Económica</th>
+                        <th>Estatus</th>
+                        <th>Acciones</th>
 
-            </thead>
+                    </tr>
 
-            <tbody>
+                </thead>
 
-                {
 
-                    empresas.map((empresa) => {
+                <tbody>
 
-                        const activa =
-                            empresa.estatus === "Activa";
+                    {
+                        empresas.map((empresa) => {
 
-                        return (
+                            const activa = empresa.estatus === "Activa";
 
-                            <tr
-                                key={empresa.id_empresa}
-                            >
 
-                                <td>
-                                    {empresa.id_empresa}
-                                </td>
+                            return (
 
-                                <td>
-                                    {empresa.razon_social}
-                                </td>
+                                <tr key={empresa.id_empresa}>
 
-                                <td>
-                                    {empresa.rfc}
-                                </td>
 
-                                <td>
-                                    {empresa.nombre_comercial}
-                                </td>
+                                    <td>
+                                        {empresa.id_empresa}
+                                    </td>
 
-                                <td>
-                                    {empresa.regimen_fiscal}
-                                </td>
 
-                                <td>
-                                    {empresa.actividad_economica}
-                                </td>
+                                    <td>
+                                        {empresa.razon_social}
+                                    </td>
 
-                                <td>
-                                    {empresa.estatus}
-                                </td>
 
-                                <td>
+                                    <td>
+                                        {empresa.rfc}
+                                    </td>
 
-                                    <button
 
-                                        onClick={() =>
-                                            onEditar(
-                                                empresa.id_empresa
-                                            )
-                                        }
+                                    <td>
+                                        {empresa.nombre_comercial}
+                                    </td>
 
-                                    >
 
-                                        Editar
+                                    <td>
+                                        {empresa.regimen_fiscal}
+                                    </td>
 
-                                    </button>
 
-                                    <button
+                                    <td>
+                                        {empresa.actividad_economica}
+                                    </td>
 
-                                        onClick={() =>
-                                            onEstado(
-                                                empresa.id_empresa,
+
+                                    <td>
+
+                                        <span
+                                            className={
                                                 activa
-                                                    ? "Inactiva"
-                                                    : "Activa"
-                                            )
-                                        }
+                                                ? "badge badge-activo"
+                                                : "badge badge-inactivo"
+                                            }
+                                        >
 
-                                    >
+                                            {
+                                                empresa.estatus
+                                            }
 
-                                        {
-                                            activa
-                                                ? "Desactivar"
-                                                : "Activar"
-                                        }
+                                        </span>
 
-                                    </button>
+                                    </td>
 
-                                </td>
 
-                            </tr>
+                                    <td>
 
-                        );
+                                        <div className="acciones-cell">
 
-                    })
 
-                }
+                                            <button
 
-            </tbody>
+                                                className="btn-accion btn-editar"
 
-        </table>
+                                                onClick={() =>
+                                                    onEditar(
+                                                        empresa.id_empresa
+                                                    )
+                                                }
+
+                                            >
+
+                                                Editar
+
+                                            </button>
+
+
+
+                                            <button
+
+                                                className={
+                                                    activa
+                                                    ? "btn-accion btn-estado-desactivar"
+                                                    : "btn-accion btn-estado-activar"
+                                                }
+
+
+                                                onClick={() =>
+                                                    onEstado(
+                                                        empresa.id_empresa,
+                                                        activa
+                                                        ? "Inactiva"
+                                                        : "Activa"
+                                                    )
+                                                }
+
+                                            >
+
+                                                {
+                                                    activa
+                                                    ? "Desactivar"
+                                                    : "Activar"
+                                                }
+
+                                            </button>
+
+
+                                        </div>
+
+
+                                    </td>
+
+
+                                </tr>
+
+                            );
+
+
+                        })
+
+                    }
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
 
     );
+
 
 }

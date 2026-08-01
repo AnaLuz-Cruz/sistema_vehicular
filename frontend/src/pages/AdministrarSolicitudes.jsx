@@ -7,27 +7,11 @@ import {
 
     obtenerSolicitud,
 
-    crearSolicitud,
-
     cambiarEstadoSolicitud
 
 } from "../services/solicitudesService";
 
 
-
-import { obtenerUsuarios } from "../services/usuariosService";
-
-import { obtenerUnidades } from "../services/unidadesService";
-
-import { obtenerCombustibles } from "../services/combustiblesService";
-
-import { obtenerCreditos } from "../services/creditosService";
-
-import { obtenerTransferencias } from "../services/transferenciasService";
-
-
-
-import FormularioSolicitud from "../components/solicitudes/FormularioSolicitud";
 
 import TablaSolicitudes from "../components/solicitudes/TablaSolicitudes";
 
@@ -35,100 +19,52 @@ import DetalleSolicitud from "../components/solicitudes/DetalleSolicitud";
 
 
 
-
 export default function AdministrarSolicitudes(){
 
 
+    const [
 
-    const [solicitudes,setSolicitudes]=useState([]);
+        solicitudes,
 
+        setSolicitudes
 
-    const [usuarios,setUsuarios]=useState([]);
-
-
-    const [unidades,setUnidades]=useState([]);
-
-
-    const [combustibles,setCombustibles]=useState([]);
-
-
-    const [creditos,setCreditos]=useState([]);
-
-
-    const [transferencias,setTransferencias]=useState([]);
+    ] = useState([]);
 
 
 
-    const [mostrarFormulario,setMostrarFormulario]=useState(false);
+    const [
+
+        detalle,
+
+        setDetalle
+
+    ] = useState(null);
 
 
-    const [solicitudEditar,setSolicitudEditar]=useState(null);
 
+    const [
 
-    const [detalle,setDetalle]=useState(null);
+        buscar,
 
+        setBuscar
 
-
-    const [buscar,setBuscar]=useState("");
+    ] = useState("");
 
 
 
 
 
 
-
-    const cargarDatos=async()=>{
+    const cargarSolicitudes = async()=>{
 
 
         try{
 
 
-            const [
-
-                solicitudesData,
-
-                usuariosData,
-
-                unidadesData,
-
-                combustiblesData,
-
-                creditosData,
-
-                transferenciasData
+            const data = await obtenerSolicitudes();
 
 
-            ] = await Promise.all([
-
-
-                obtenerSolicitudes(),
-
-                obtenerUsuarios(),
-
-                obtenerUnidades(),
-
-                obtenerCombustibles(),
-
-                obtenerCreditos(),
-
-                obtenerTransferencias()
-
-
-            ]);
-
-
-
-            setSolicitudes(solicitudesData);
-
-            setUsuarios(usuariosData);
-
-            setUnidades(unidadesData);
-
-            setCombustibles(combustiblesData);
-
-            setCreditos(creditosData);
-
-            setTransferencias(transferenciasData);
+            setSolicitudes(data);
 
 
 
@@ -148,11 +84,10 @@ export default function AdministrarSolicitudes(){
 
 
 
-
     useEffect(()=>{
 
 
-        cargarDatos();
+        cargarSolicitudes();
 
 
     },[]);
@@ -163,61 +98,13 @@ export default function AdministrarSolicitudes(){
 
 
 
-
-
-    const guardarSolicitud=async(datos)=>{
-
-
-        try{
-
-
-            await crearSolicitud(datos);
-
-
-            await cargarDatos();
-
-
-            setMostrarFormulario(false);
-
-
-
-        }catch(error){
-
-
-            console.error(error);
-
-
-            alert(
-
-                error.response?.data?.message ||
-
-                "Error al guardar solicitud"
-
-            );
-
-
-        }
-
-
-    };
-
-
-
-
-
-
-
-
-
-    const verDetalle=async(id)=>{
+    const verDetalle = async(id)=>{
 
 
         try{
 
 
-            const data =
-                await obtenerSolicitud(id);
-
+            const data = await obtenerSolicitud(id);
 
 
             setDetalle(data);
@@ -242,8 +129,7 @@ export default function AdministrarSolicitudes(){
 
 
 
-
-    const cambiarEstado=async(
+    const cambiarEstado = async(
 
         id,
 
@@ -262,10 +148,11 @@ export default function AdministrarSolicitudes(){
             if(estado==="Rechazada"){
 
 
-                motivo =
-                    prompt(
-                        "Ingrese motivo del rechazo"
-                    );
+                motivo = prompt(
+
+                    "Ingrese motivo del rechazo"
+
+                );
 
 
             }
@@ -285,7 +172,7 @@ export default function AdministrarSolicitudes(){
 
 
 
-            await cargarDatos();
+            await cargarSolicitudes();
 
 
 
@@ -311,9 +198,7 @@ export default function AdministrarSolicitudes(){
     const solicitudesFiltradas = solicitudes.filter((s)=>{
 
 
-        const texto =
-
-            buscar.toLowerCase();
+        const texto = buscar.toLowerCase();
 
 
 
@@ -323,17 +208,20 @@ export default function AdministrarSolicitudes(){
 
             .includes(texto)
 
+
             ||
 
             s.cve?.toLowerCase()
 
             .includes(texto)
 
+
             ||
 
             s.estado?.toLowerCase()
 
             .includes(texto)
+
 
         );
 
@@ -347,8 +235,7 @@ export default function AdministrarSolicitudes(){
 
 
 
-
-    return (
+    return(
 
         <div>
 
@@ -383,71 +270,7 @@ export default function AdministrarSolicitudes(){
 
 
 
-
-
-            {
-
-                mostrarFormulario
-
-                ?
-
-                <FormularioSolicitud
-
-
-                    usuarios={usuarios}
-
-                    unidades={unidades}
-
-                    combustibles={combustibles}
-
-                    creditos={creditos}
-
-                    transferencias={transferencias}
-
-
-                    onGuardar={guardarSolicitud}
-
-
-                    onCancelar={()=>{
-
-
-                        setMostrarFormulario(false);
-
-
-                    }}
-
-
-                />
-
-
-                :
-
-                <button
-
-                    onClick={()=>{
-
-
-                        setMostrarFormulario(true);
-
-
-                    }}
-
-                >
-
-                    Nueva Solicitud
-
-                </button>
-
-
-            }
-
-
-
-
-
-
             <hr/>
-
 
 
 
@@ -472,6 +295,7 @@ export default function AdministrarSolicitudes(){
 
 
 
+
             {
 
                 detalle &&
@@ -479,12 +303,9 @@ export default function AdministrarSolicitudes(){
 
                 <DetalleSolicitud
 
-
                     solicitud={detalle}
 
-
                     cerrar={()=>setDetalle(null)}
-
 
                 />
 

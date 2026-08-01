@@ -1,0 +1,171 @@
+.tabla-container {
+
+    width:100%;
+
+    height:auto;
+
+    overflow-x:auto;
+
+    overflow-y:visible;
+
+    background:#ffffff;
+
+    border-radius:12px;
+
+    box-shadow:
+    0 4px 6px -1px rgba(0,0,0,.05),
+    0 2px 4px -1px rgba(0,0,0,.03);
+
+    margin-top:15px;
+
+    border:1px solid #e2e8f0;
+
+}
+
+.tabla-usuarios {
+    width: 95%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.tabla-usuarios th {
+    background-color: #a30000;
+    color: #fdfdfd;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tabla-usuarios td {
+    padding: 10px 1px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #030303;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Pone puntos suspensivos (...) si el texto es muy largo para la columna */
+    white-space: nowrap;     /* Mantiene el contenido en una sola línea sin desbordar */
+}
+
+.tabla-usuarios tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.tabla-usuarios tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Insignias de Estado (Badge) compactas */
+.badge {
+    padding: 3px 8px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-activo {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-inactivo {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Acciones y Botones más compactos */
+.acciones-cell {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.btn-accion {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-accion:active {
+    transform: scale(0.96);
+}
+
+.btn-editar {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.btn-editar:hover {
+    background-color: #bae6fd;
+}
+
+.btn-estado-activar {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.btn-estado-activar:hover {
+    background-color: #bbf7d0;
+}
+
+.btn-estado-desactivar {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.btn-estado-desactivar:hover {
+    background-color: #fecaca;
+}
+
+
+
+
+
+/* Estilos para el fondo oscuro del modal */
+.admin-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+/* Contenedor flotante de la ventana modal */
+.admin-modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: fadeInModal 0.2s ease-out;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
